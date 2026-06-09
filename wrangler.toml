@@ -15,4 +15,4 @@ binding = "ASSETS"
 [[d1_databases]]
 binding = "DB"
 database_name = "donebyfive-subscribers"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "79eaa17d-0818-418a-83c0-a2d4adf048ad"
