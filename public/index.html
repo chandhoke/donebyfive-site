@@ -444,6 +444,13 @@ body {
   color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
   margin-top: 14px; text-transform: uppercase;
 }
+.capture-status {
+  font-family: var(--f-sans); font-size: 13px; font-weight: 400;
+  margin-top: 16px; min-height: 18px; line-height: 1.5;
+}
+.capture-status.ok  { color: var(--moss-lite); }
+.capture-status.err { color: #E08070; }
+.capture-btn:disabled { opacity: 0.6; cursor: default; }
 
 /* ── ABOUT ───────────────────────────────────────────────── */
 .about { padding: 96px 0; border-top: 1px solid var(--stone-3); }
@@ -913,10 +920,11 @@ footer {
     <p class="capture-eyebrow">Stay in the loop</p>
     <h2 class="capture-h2">New templates, first.<br><em>No noise.</em></h2>
     <p class="capture-body">Get notified when new templates drop — repair shop tools, HR forms, finance trackers. One email per launch. No fluff.</p>
-    <div class="capture-form">
-      <input type="email" class="capture-input" placeholder="your@email.com">
-      <button class="capture-btn">Notify me</button>
-    </div>
+    <form class="capture-form" id="signup-form" novalidate>
+      <input type="email" name="email" class="capture-input" placeholder="your@email.com" aria-label="Email address" required>
+      <button type="submit" class="capture-btn">Notify me</button>
+    </form>
+    <p class="capture-status" id="signup-status" role="status" aria-live="polite"></p>
     <p class="capture-note">No spam. Unsubscribe anytime. Alberta-based business.</p>
   </div>
 </section>
@@ -983,6 +991,58 @@ footer {
   </div>
   <div class="footer-note">© 2026 DoneByFive · Alberta, Canada · Retail operations templates. Built by operators. · donebyfive.com</div>
 </footer>
+
+<script>
+  (function () {
+    var form = document.getElementById('signup-form');
+    if (!form) return;
+    var statusEl = document.getElementById('signup-status');
+    var input = form.querySelector('input[type="email"]');
+    var button = form.querySelector('button');
+
+    function show(msg, kind) {
+      statusEl.textContent = msg || '';
+      statusEl.className = 'capture-status' + (kind ? ' ' + kind : '');
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = (input.value || '').trim();
+      if (!email) { show('Please enter your email.', 'err'); input.focus(); return; }
+
+      var original = button.textContent;
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      show('', '');
+
+      fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      })
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) {
+            return { ok: r.ok, data: d };
+          });
+        })
+        .then(function (res) {
+          if (res.ok && res.data && res.data.ok) {
+            form.reset();
+            show("You're on the list — we'll email you when new templates drop.", 'ok');
+          } else {
+            show((res.data && res.data.error) || 'Something went wrong. Please try again.', 'err');
+          }
+        })
+        .catch(function () {
+          show('Network error — please try again.', 'err');
+        })
+        .finally(function () {
+          button.disabled = false;
+          button.textContent = original;
+        });
+    });
+  })();
+</script>
 
 </body>
 </html>
