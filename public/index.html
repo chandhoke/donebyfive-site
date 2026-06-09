@@ -476,6 +476,8 @@ body {
   font-family: var(--f-serif); font-size: 20px;
   color: var(--ink); line-height: 1.15; margin-bottom: 8px;
 }
+.product-name a { color: inherit; text-decoration: none; transition: color .15s; }
+.product-name a:hover { color: var(--moss); }
 .product-desc {
   font-size: 12px; color: var(--stone-5); font-weight: 300;
   line-height: 1.6; margin-bottom: 16px;
@@ -791,7 +793,7 @@ footer {
 <section class="products" id="templates">
   <div class="wrap">
     <p class="section-eyebrow">Templates</p>
-    <h2 class="section-heading">Built for how stores actually run.</h2>
+    <h2 class="section-heading">Retail operations templates, built for how stores run.</h2>
     <p class="section-sub">Every template comes from a real operational problem — not a design exercise. Rename a category, clear the sample data, start using it today.</p>
 
     <div class="product-grid">
@@ -853,7 +855,7 @@ footer {
         </div>
         <div class="product-footer">
           <div class="product-cat">Retail Core</div>
-          <div class="product-name">Grocery Category<br>Sales Tracker</div>
+          <div class="product-name"><a href="/templates/grocery-sales-tracker">Grocery Category<br>Sales Tracker</a></div>
           <div class="product-desc">Log sales once, see category totals, week-over-week change, and dead departments automatically. Built for grocery and convenience stores.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $18</div>
@@ -923,7 +925,7 @@ footer {
         </div>
         <div class="product-footer">
           <div class="product-cat">Repair Shop</div>
-          <div class="product-name">Device Repair Job<br>Tracker & Margin Calc</div>
+          <div class="product-name"><a href="/templates/device-repair-job-tracker">Device Repair Job<br>Tracker & Margin Calc</a></div>
           <div class="product-desc">Track every repair job, parts cost, and labour. See your margin per job automatically. Built from real repair-shop operations.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $22</div>
@@ -993,7 +995,7 @@ footer {
         </div>
         <div class="product-footer">
           <div class="product-cat">Landlord</div>
-          <div class="product-name">Landlord Rent Roll<br>& Payment Tracker</div>
+          <div class="product-name"><a href="/templates/landlord-rent-tracker">Landlord Rent Roll<br>& Payment Tracker</a></div>
           <div class="product-desc">Track every tenant, payment status, and lease date. Late rent shows red automatically. Alberta-ready with GST and deposit fields.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $20</div>
