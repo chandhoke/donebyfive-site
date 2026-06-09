@@ -4,10 +4,81 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DoneByFive — Retail Operations Templates. Built by Operators.</title>
-<meta name="description" content="Excel and Google Sheets templates built by a real grocery and repair shop operator in Alberta, Canada. Bilingual EN/FR. Instant download.">
+<meta name="description" content="Retail operations spreadsheet templates for small business — built by a real grocery and device-repair shop operator in Alberta, Canada. Excel + Google Sheets, bilingual EN/FR, instant download.">
+<link rel="canonical" href="https://donebyfive.com/">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DoneByFive">
+<meta property="og:url" content="https://donebyfive.com/">
+<meta property="og:title" content="DoneByFive — Retail Operations Templates. Built by Operators.">
+<meta property="og:description" content="Excel & Google Sheets templates built from real grocery and repair-shop experience. Bilingual EN/FR. Canadian pricing. Instant download.">
+<meta property="og:image" content="https://donebyfive.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DoneByFive — retail operations templates, built by operators.">
+<meta property="og:locale" content="en_CA">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DoneByFive — Retail Operations Templates. Built by Operators.">
+<meta name="twitter:description" content="Excel & Google Sheets templates built from real grocery and repair-shop experience. Bilingual EN/FR. Instant download.">
+<meta name="twitter:image" content="https://donebyfive.com/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://donebyfive.com/#org",
+      "name": "DoneByFive",
+      "url": "https://donebyfive.com/",
+      "logo": "https://donebyfive.com/favicon.svg",
+      "description": "Retail operations spreadsheet templates built by a real grocery and device-repair shop operator in Alberta, Canada.",
+      "areaServed": "CA",
+      "sameAs": ["https://www.etsy.com/shop/DoneByFive"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://donebyfive.com/#website",
+      "url": "https://donebyfive.com/",
+      "name": "DoneByFive",
+      "publisher": { "@id": "https://donebyfive.com/#org" },
+      "inLanguage": ["en-CA", "fr-CA"]
+    },
+    {
+      "@type": "Product",
+      "name": "Grocery Category Sales Tracker",
+      "description": "Log sales once, see category totals, week-over-week change, and dead departments automatically. Built for grocery and convenience stores.",
+      "brand": { "@id": "https://donebyfive.com/#org" },
+      "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive" }
+    },
+    {
+      "@type": "Product",
+      "name": "Device Repair Job Tracker & Margin Calculator",
+      "description": "Track every repair job, parts cost, and labour. See your margin per job automatically. Built from real repair-shop operations.",
+      "brand": { "@id": "https://donebyfive.com/#org" },
+      "offers": { "@type": "Offer", "price": "22.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive" }
+    },
+    {
+      "@type": "Product",
+      "name": "Landlord Rent Roll & Payment Tracker",
+      "description": "Track every tenant, payment status, and lease date. Late rent shows red automatically. Alberta-ready with GST and deposit fields.",
+      "brand": { "@id": "https://donebyfive.com/#org" },
+      "offers": { "@type": "Offer", "price": "20.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive" }
+    }
+  ]
+}
+</script>
 
 <style>
 :root {
@@ -51,6 +122,23 @@ body {
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
 }
+
+/* ── A11Y UTILITIES ──────────────────────────────────────── */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.skip-link {
+  position: absolute; left: 12px; top: -56px;
+  z-index: 200;
+  background: var(--moss); color: #fff;
+  font-family: var(--f-sans); font-size: 13px; font-weight: 500;
+  padding: 10px 16px; border-radius: var(--r-s);
+  text-decoration: none;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: 12px; }
 
 /* ── NAV ─────────────────────────────────────────────────── */
 .nav {
@@ -198,11 +286,13 @@ body {
 }
 .btn-moss:hover { background: var(--moss-mid); }
 .btn-ghost {
-  font-size: 13px; color: rgba(255,255,255,0.38);
-  text-decoration: none; display: flex; align-items: center;
-  gap: 6px; transition: color .15s;
+  font-size: 13px; color: rgba(255,255,255,0.72);
+  text-decoration: none; display: inline-flex; align-items: center;
+  gap: 6px; padding: 11px 18px;
+  border: 1px solid rgba(255,255,255,0.18); border-radius: var(--r-s);
+  transition: color .15s, border-color .15s, background .15s;
 }
-.btn-ghost:hover { color: rgba(255,255,255,0.75); }
+.btn-ghost:hover { color: #fff; border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.05); }
 .hero-proof {
   display: flex; gap: 32px;
   padding-top: 32px;
@@ -440,8 +530,8 @@ body {
 }
 .capture-btn:hover { background: var(--moss-mid); }
 .capture-note {
-  font-family: var(--f-mono); font-size: 9px;
-  color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
+  font-family: var(--f-mono); font-size: 11px;
+  color: rgba(255,255,255,0.4); letter-spacing: 0.05em;
   margin-top: 14px; text-transform: uppercase;
 }
 .capture-status {
@@ -543,18 +633,22 @@ footer {
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <!-- NAV -->
-<nav class="nav">
-  <a href="#" class="nav-brand">
+<nav class="nav" aria-label="Main navigation">
+  <a href="#" class="nav-brand" aria-label="DoneByFive home">
     <div class="nav-disc">5</div>
     <span class="nav-name">DoneByFive</span>
   </a>
   <div class="nav-actions">
     <a href="#templates" class="nav-link">Templates</a>
     <a href="#about" class="nav-link">About</a>
-    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="nav-cta">Shop on Etsy →</a>
+    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="nav-cta">Shop on Etsy →</a>
   </div>
 </nav>
+
+<main id="main" tabindex="-1">
 
 <!-- HERO -->
 <section class="hero">
@@ -565,11 +659,11 @@ footer {
       <div class="hero-tag-dot"><span>5</span></div>
       <span class="hero-tag-text">Alberta, Canada · EN/FR</span>
     </div>
-    <h1 class="hero-h1">Admin done.<br>By <em>five.</em></h1>
+    <h1 class="hero-h1" aria-label="Admin done. By five.">Admin done.<br>By <em>five.</em></h1>
     <p class="hero-promise">Retail operations templates · Built by operators</p>
     <p class="hero-body">Excel and Google Sheets templates built from real store experience — not designed in a vacuum. If you run a retail shop, device repair store, or rental property, these are the tools you actually need.</p>
     <div class="hero-actions">
-      <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="btn-moss">Browse the shop →</a>
+      <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="btn-moss">Browse the shop →</a>
       <a href="#capture" class="btn-ghost">Get notified of new templates ↓</a>
     </div>
     <div class="hero-proof">
@@ -586,8 +680,8 @@ footer {
         <div class="hero-proof-label">Canada pricing</div>
       </div>
       <div class="hero-proof-item">
-        <div class="hero-proof-num">⬇</div>
-        <div class="hero-proof-label">Instant download</div>
+        <div class="hero-proof-num">Instant</div>
+        <div class="hero-proof-label">Download</div>
       </div>
     </div>
   </div>
@@ -756,12 +850,12 @@ footer {
           </div>
         </div>
         <div class="product-footer">
-          <div class="product-cat">Retail Core · Phase 1</div>
+          <div class="product-cat">Retail Core</div>
           <div class="product-name">Grocery Category<br>Sales Tracker</div>
           <div class="product-desc">Log sales once, see category totals, week-over-week change, and dead departments automatically. Built for grocery and convenience stores.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $18</div>
-            <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="product-link">Get it →</a>
+            <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="product-link">Get it<span class="sr-only"> — Grocery Category Sales Tracker</span> →</a>
           </div>
         </div>
       </div>
@@ -826,12 +920,12 @@ footer {
           </div>
         </div>
         <div class="product-footer">
-          <div class="product-cat">Repair Shop · Phase 3</div>
+          <div class="product-cat">Repair Shop</div>
           <div class="product-name">Device Repair Job<br>Tracker & Margin Calc</div>
-          <div class="product-desc">Track every repair job, parts cost, and labour. See your margin per job automatically. Built from real Tech Eyes shop operations.</div>
+          <div class="product-desc">Track every repair job, parts cost, and labour. See your margin per job automatically. Built from real repair-shop operations.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $22</div>
-            <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="product-link">Get it →</a>
+            <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="product-link">Get it<span class="sr-only"> — Device Repair Job Tracker</span> →</a>
           </div>
         </div>
       </div>
@@ -896,12 +990,12 @@ footer {
           </div>
         </div>
         <div class="product-footer">
-          <div class="product-cat">Landlord · Phase 3</div>
+          <div class="product-cat">Landlord</div>
           <div class="product-name">Landlord Rent Roll<br>& Payment Tracker</div>
           <div class="product-desc">Track every tenant, payment status, and lease date. Late rent shows red automatically. Alberta-ready with GST and deposit fields.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $20</div>
-            <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="product-link">Get it →</a>
+            <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="product-link">Get it<span class="sr-only"> — Landlord Rent Roll &amp; Payment Tracker</span> →</a>
           </div>
         </div>
       </div>
@@ -909,7 +1003,7 @@ footer {
     </div>
 
     <div style="text-align:center; margin-top:48px;">
-      <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="btn-moss" style="font-size:14px; padding:14px 32px;">See all 66+ templates on Etsy →</a>
+      <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="btn-moss" style="font-size:14px; padding:14px 32px;">See all 66+ templates on Etsy →</a>
     </div>
   </div>
 </section>
@@ -918,7 +1012,7 @@ footer {
 <section class="capture" id="capture">
   <div class="capture-inner">
     <p class="capture-eyebrow">Stay in the loop</p>
-    <h2 class="capture-h2">New templates, first.<br><em>No noise.</em></h2>
+    <h2 class="capture-h2" aria-label="New templates, first. No noise.">New templates, first.<br><em>No noise.</em></h2>
     <p class="capture-body">Get notified when new templates drop — repair shop tools, HR forms, finance trackers. One email per launch. No fluff.</p>
     <form class="capture-form" id="signup-form" novalidate>
       <input type="email" name="email" class="capture-input" placeholder="your@email.com" aria-label="Email address" required>
@@ -938,7 +1032,7 @@ footer {
           <div class="about-tag-dot"></div>
           <span class="about-tag-text">Built by operators</span>
         </div>
-        <h2 class="about-h2">Not a designer.<br>An <em>operator.</em></h2>
+        <h2 class="about-h2" aria-label="Not a designer. An operator.">Not a designer.<br>An <em>operator.</em></h2>
         <p class="about-body">These templates come from running a grocery store and a device repair shop in Alberta, Canada. Every tab, every formula, every field exists because a real shift needed it.</p>
         <p class="about-body">Most business templates are built by designers who have never closed a till. DoneByFive is built by someone who has — and who got tired of rebuilding the same spreadsheets every month.</p>
         <p class="about-body">Bilingual EN/FR. Canadian pricing. Alberta employment and tax standards baked in where it matters.</p>
@@ -977,18 +1071,20 @@ footer {
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">
     <div class="footer-disc">5</div>
     <span class="footer-name">DoneByFive</span>
   </div>
-  <div class="footer-links">
-    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" class="footer-link">Etsy Shop</a>
+  <nav class="footer-links" aria-label="Footer">
+    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="footer-link">Etsy Shop</a>
     <a href="#templates" class="footer-link">Templates</a>
     <a href="#about" class="footer-link">About</a>
     <a href="#capture" class="footer-link">Newsletter</a>
-  </div>
+  </nav>
   <div class="footer-note">© 2026 DoneByFive · Alberta, Canada · Retail operations templates. Built by operators. · donebyfive.com</div>
 </footer>
 
