@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><radialGradient id="g" cx="80%" cy="15%" r="60%">
+    <stop offset="0%" stop-color="#2D4A35" stop-opacity="0.55"/>
+    <stop offset="65%" stop-color="#2D4A35" stop-opacity="0"/>
+  </radialGradient></defs>
+  <rect width="1200" height="630" fill="#111110"/>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <g transform="translate(80,70)">
+    <circle cx="26" cy="26" r="26" fill="#2D4A35"/>
+    <text x="26" y="38" text-anchor="middle" font-family="DejaVu Serif" font-size="30" fill="#F7F6F2">5</text>
+    <text x="72" y="35" font-family="DejaVu Sans" font-size="22" font-weight="700" letter-spacing="3" fill="#FFFFFF">DONEBYFIVE</text>
+  </g>
+  <text x="82" y="205" font-family="DejaVu Sans Mono" font-size="20" letter-spacing="3" fill="#5A8A68">RETAIL OPERATIONS TEMPLATE</text>
+  <text x="78" y="305" font-family="DejaVu Serif" font-size="92" fill="#FFFFFF">Landlord</text>
+  <text x="78" y="400" font-family="DejaVu Serif" font-size="92" fill="#5A8A68">Rent Roll</text>
+  <text x="82" y="468" font-family="DejaVu Sans" font-size="27" fill="#FFFFFF" fill-opacity="0.62">Rent, late-payment flags &amp; occupancy — Alberta-ready.</text>
+  <text x="82" y="548" font-family="DejaVu Sans Mono" font-size="19" letter-spacing="1.5" fill="#FFFFFF" fill-opacity="0.42">EXCEL + GOOGLE SHEETS &#183; BILINGUAL EN/FR &#183; CAD</text>
+</svg>

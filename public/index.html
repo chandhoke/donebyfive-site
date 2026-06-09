@@ -62,21 +62,24 @@
       "name": "Grocery Category Sales Tracker",
       "description": "Log sales once, see category totals, week-over-week change, and dead departments automatically. Built for grocery and convenience stores.",
       "brand": { "@id": "https://donebyfive.com/#org" },
-      "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive" }
+      "image": "https://donebyfive.com/og-grocery.png",
+      "offers": { "@type": "Offer", "price": "18.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive", "seller": { "@id": "https://donebyfive.com/#org" } }
     },
     {
       "@type": "Product",
       "name": "Device Repair Job Tracker & Margin Calculator",
       "description": "Track every repair job, parts cost, and labour. See your margin per job automatically. Built from real repair-shop operations.",
       "brand": { "@id": "https://donebyfive.com/#org" },
-      "offers": { "@type": "Offer", "price": "22.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive" }
+      "image": "https://donebyfive.com/og-repair.png",
+      "offers": { "@type": "Offer", "price": "22.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive", "seller": { "@id": "https://donebyfive.com/#org" } }
     },
     {
       "@type": "Product",
       "name": "Landlord Rent Roll & Payment Tracker",
       "description": "Track every tenant, payment status, and lease date. Late rent shows red automatically. Alberta-ready with GST and deposit fields.",
       "brand": { "@id": "https://donebyfive.com/#org" },
-      "offers": { "@type": "Offer", "price": "20.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive" }
+      "image": "https://donebyfive.com/og-landlord.png",
+      "offers": { "@type": "Offer", "price": "20.00", "priceCurrency": "CAD", "availability": "https://schema.org/InStock", "url": "https://www.etsy.com/shop/DoneByFive", "seller": { "@id": "https://donebyfive.com/#org" } }
     }
   ]
 }
@@ -473,8 +476,8 @@ body {
   color: var(--moss-lite); margin-bottom: 6px;
 }
 .product-name {
-  font-family: var(--f-serif); font-size: 20px;
-  color: var(--ink); line-height: 1.15; margin-bottom: 8px;
+  font-family: var(--f-serif); font-size: 20px; font-weight: 400;
+  color: var(--ink); line-height: 1.15; margin: 0 0 8px;
 }
 .product-name a { color: inherit; text-decoration: none; transition: color .15s; }
 .product-name a:hover { color: var(--moss); }
@@ -665,7 +668,7 @@ footer {
     </div>
     <h1 class="hero-h1" aria-label="Admin done. By five.">Admin done. <br>By <em>five.</em></h1>
     <p class="hero-promise">Retail operations templates · Built by operators</p>
-    <p class="hero-body">Excel and Google Sheets templates built from real store experience — not designed in a vacuum. If you run a retail shop, device repair store, or rental property, these are the tools you actually need.</p>
+    <p class="hero-body">Excel and Google Sheets spreadsheet templates for small business, built from real store experience — not designed in a vacuum. If you run a retail shop, device repair store, or rental property, these are the tools you actually need.</p>
     <div class="hero-actions">
       <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="btn-moss">Browse the shop →</a>
       <a href="#capture" class="btn-ghost">Get notified of new templates ↓</a>
@@ -855,7 +858,7 @@ footer {
         </div>
         <div class="product-footer">
           <div class="product-cat">Retail Core</div>
-          <div class="product-name"><a href="/templates/grocery-sales-tracker">Grocery Category<br>Sales Tracker</a></div>
+          <h3 class="product-name"><a href="/templates/grocery-sales-tracker">Grocery Category<br>Sales Tracker</a></h3>
           <div class="product-desc">Log sales once, see category totals, week-over-week change, and dead departments automatically. Built for grocery and convenience stores.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $18</div>
@@ -925,7 +928,7 @@ footer {
         </div>
         <div class="product-footer">
           <div class="product-cat">Repair Shop</div>
-          <div class="product-name"><a href="/templates/device-repair-job-tracker">Device Repair Job<br>Tracker & Margin Calc</a></div>
+          <h3 class="product-name"><a href="/templates/device-repair-job-tracker">Device Repair Job<br>Tracker & Margin Calc</a></h3>
           <div class="product-desc">Track every repair job, parts cost, and labour. See your margin per job automatically. Built from real repair-shop operations.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $22</div>
@@ -995,7 +998,7 @@ footer {
         </div>
         <div class="product-footer">
           <div class="product-cat">Landlord</div>
-          <div class="product-name"><a href="/templates/landlord-rent-tracker">Landlord Rent Roll<br>& Payment Tracker</a></div>
+          <h3 class="product-name"><a href="/templates/landlord-rent-tracker">Landlord Rent Roll<br>& Payment Tracker</a></h3>
           <div class="product-desc">Track every tenant, payment status, and lease date. Late rent shows red automatically. Alberta-ready with GST and deposit fields.</div>
           <div class="product-bottom">
             <div class="product-price">CAD $20</div>
