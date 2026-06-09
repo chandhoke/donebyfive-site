@@ -1,0 +1,7 @@
+name = "donebyfive-site"
+compatibility_date = "2026-06-09"
+
+# Static-assets-only Worker: serves the files in this directory (index.html at "/").
+# No Worker script (`main`) is needed for a plain static landing page.
+[assets]
+directory = "./"
