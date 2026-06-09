@@ -1,7 +1,18 @@
 name = "donebyfive-site"
+main = "src/index.js"
 compatibility_date = "2026-06-09"
 
-# Static-assets-only Worker: serves the files in this directory (index.html at "/").
-# No Worker script (`main`) is needed for a plain static landing page.
+# Static site lives in ./public and is served via the ASSETS binding.
+# Requests that don't match a static file (e.g. POST /api/subscribe) fall
+# through to the Worker in src/index.js.
 [assets]
-directory = "./"
+directory = "./public"
+binding = "ASSETS"
+
+# D1 database that stores newsletter signups.
+# Create it once with:  npx wrangler d1 create donebyfive-subscribers
+# then paste the returned database_id below (replacing the placeholder).
+[[d1_databases]]
+binding = "DB"
+database_name = "donebyfive-subscribers"
+database_id = "79eaa17d-0818-418a-83c0-a2d4adf048ad"
