@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+  NOTE FOR THE OWNER: Draft product page in the DoneByFive operator voice.
+  Please FACT-CHECK the "What's inside" features and any specifics against the
+  actual template before relying on this copy. Update price if it changes.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grocery Category Sales Tracker for Excel &amp; Google Sheets | DoneByFive</title>
+<meta name="description" content="A grocery store sales tracker spreadsheet for Excel & Google Sheets. Log sales once and see category totals, week-over-week change, and dead departments. Bilingual EN/FR.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://donebyfive.com/templates/grocery-sales-tracker">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="DoneByFive">
+<meta property="og:url" content="https://donebyfive.com/templates/grocery-sales-tracker">
+<meta property="og:title" content="Grocery Category Sales Tracker — Excel & Google Sheets">
+<meta property="og:description" content="Log sales once and see category totals, week-over-week change, and dead departments automatically. Built for grocery & convenience stores.">
+<meta property="og:image" content="https://donebyfive.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111110;--ink-60:#444440;--stone:#F7F6F2;--stone-3:#E4E2DC;--stone-5:#9E9B94;--moss:#2D4A35;--moss-mid:#3D6347;--moss-lite:#5A8A68;--moss-pale:#E8F0EA;--white:#fff;--f-serif:'Instrument Serif',Georgia,serif;--f-sans:'Geist',system-ui,sans-serif;--f-mono:'Geist Mono','Courier New',monospace;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--stone);font-family:var(--f-sans);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  header{border-bottom:1px solid var(--stone-3);padding:20px 0;margin-bottom:32px;}
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+  .disc{width:28px;height:28px;border-radius:50%;background:var(--moss);display:flex;align-items:center;justify-content:center;font-family:var(--f-serif);font-style:italic;font-size:15px;color:var(--stone);}
+  .brand-name{font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);}
+  main{padding-bottom:80px;}
+  .crumb{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;color:var(--stone-5);margin-bottom:24px;}
+  .crumb a{color:var(--stone-5);text-decoration:none;}
+  .crumb a:hover{color:var(--ink);}
+  .cat{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--moss-lite);margin-bottom:8px;}
+  h1{font-family:var(--f-serif);font-size:46px;font-weight:400;line-height:1.05;margin-bottom:14px;}
+  .meta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:24px;}
+  .price{font-weight:600;font-size:22px;}
+  .pill{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--moss);background:var(--moss-pale);border:1px solid #C8D8CB;border-radius:100px;padding:4px 12px;}
+  .cta{display:inline-block;background:var(--moss);color:#fff;font-weight:500;font-size:15px;padding:13px 26px;border-radius:6px;text-decoration:none;transition:background .15s;}
+  .cta:hover{background:var(--moss-mid);}
+  .lede{font-size:18px;color:var(--ink-60);margin:8px 0 28px;}
+  h2{font-family:var(--f-serif);font-size:27px;font-weight:400;margin:40px 0 12px;}
+  p{font-size:16px;color:var(--ink-60);margin-bottom:16px;}
+  ul{margin:0 0 16px 22px;}
+  li{font-size:16px;color:var(--ink-60);margin-bottom:9px;}
+  strong{color:var(--ink);font-weight:600;}
+  .faq h3{font-family:var(--f-sans);font-size:16px;font-weight:600;color:var(--ink);margin:22px 0 6px;}
+  .cta-row{margin:40px 0 8px;padding:28px;background:var(--white);border:1px solid var(--stone-3);border-radius:16px;text-align:center;}
+  .cta-row p{margin-bottom:16px;}
+  a.inline{color:var(--moss-lite);}
+  .back{display:inline-block;margin-top:36px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
+  .back:hover{color:var(--ink);}
+  footer{border-top:1px solid var(--stone-3);padding:24px 0;}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+  .footer-links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
+  .footer-links a:hover{color:var(--ink);}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://donebyfive.com/"},
+      {"@type":"ListItem","position":2,"name":"Templates","item":"https://donebyfive.com/#templates"},
+      {"@type":"ListItem","position":3,"name":"Grocery Category Sales Tracker","item":"https://donebyfive.com/templates/grocery-sales-tracker"}
+    ]},
+    {"@type":"Product","name":"Grocery Category Sales Tracker","description":"A grocery store sales tracker spreadsheet for Excel and Google Sheets. Log sales once and see category totals, week-over-week change, and dead departments automatically.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Spreadsheet template","offers":{"@type":"Offer","price":"18.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive"}}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="wrap"><a href="/" class="brand"><span class="disc">5</span><span class="brand-name">DoneByFive</span></a></div>
+</header>
+
+<main class="wrap">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/#templates">Templates</a> / Grocery Category Sales Tracker</nav>
+
+  <div class="cat">Retail Core · Grocery &amp; Convenience</div>
+  <h1>Grocery Category Sales Tracker</h1>
+  <div class="meta">
+    <span class="price">CAD $18</span>
+    <span class="pill">Excel + Google Sheets</span>
+    <span class="pill">Bilingual EN / FR</span>
+  </div>
+  <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Buy on Etsy →</a>
+
+  <p class="lede">A grocery store sales tracker that turns a week of till numbers into a clear picture of what's selling, what's slipping, and which department went quiet.</p>
+
+  <p>If you run a grocery store or convenience shop, you already know the numbers are in there somewhere — on the till report, in your head, on a scrap of paper by the register. The problem is pulling them together fast enough to actually act on them. This template does the pulling for you: <strong>log each line of sales once</strong>, and the category totals, week-over-week change, and your top and bottom departments update automatically.</p>
+
+  <h2>Who it's for</h2>
+  <p>Independent grocery and convenience store owners and managers who want to track sales by category without buying a full retail analytics platform. If you live in Excel or Google Sheets and want answers in minutes — not a new subscription to learn — this is built for you.</p>
+
+  <h2>What's inside</h2>
+  <ul>
+    <li><strong>Weekly sales log</strong> — enter product, category, quantity, unit price; the line total calculates itself.</li>
+    <li><strong>Category totals</strong> — see exactly how much Dairy, Beverages, Frozen, Produce and the rest each brought in.</li>
+    <li><strong>Week-over-week change</strong> — spot what's trending up and what's falling off before it becomes a problem.</li>
+    <li><strong>Dead-department flags</strong> — categories with no sales surface automatically so slow stock doesn't hide.</li>
+    <li><strong>Top sellers at a glance</strong> — know your movers so you never run dry on the items that pay the bills.</li>
+    <li><strong>Bilingual labels (EN/FR)</strong> and Canadian-dollar formatting throughout.</li>
+  </ul>
+
+  <h2>How it works</h2>
+  <p>Open the Weekly Data tab, type in the week's sales, and switch to the dashboard. There are no macros to enable and no add-ins to install — it's a clean spreadsheet that opens anywhere. Rename the sample categories to match your store, clear the example rows, and you're tracking your own numbers in about ten minutes. Because everything is formula-driven, your dashboard stays current the moment you add a row.</p>
+
+  <h2>Why track by category</h2>
+  <p>Total sales tell you whether it was a good week. <em>Category</em> sales tell you <strong>why</strong>. When you can see that beverages carried the week while frozen quietly flatlined, you order smarter, set your shelf space with intent, and catch a fading department before it ties up cash. That's the difference between reacting at month-end and steering week to week.</p>
+
+  <div class="faq">
+    <h2>FAQ</h2>
+    <h3>Does it work in both Excel and Google Sheets?</h3>
+    <p>Yes. It's a standard <code>.xlsx</code> file you can open in Excel or upload to Google Sheets — no macros, no add-ins, no subscription.</p>
+    <h3>Is it really bilingual?</h3>
+    <p>Labels and instructions are provided in both English and French in one file, so you can use whichever you prefer.</p>
+    <h3>Can I add my own categories?</h3>
+    <p>Absolutely — rename the sample categories to match your store, and the totals and charts follow automatically.</p>
+    <h3>How do I get it?</h3>
+    <p>It's an instant digital download from our Etsy shop. Buy once, use it forever — no recurring fees.</p>
+  </div>
+
+  <div class="cta-row">
+    <p><strong>Start tracking this week's numbers.</strong> Instant download, CAD $18.</p>
+    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Buy on Etsy →</a>
+  </div>
+
+  <a href="/#templates" class="back">← All templates</a>
+</main>
+
+<footer>
+  <div class="wrap footer-links">
+    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer">Etsy Shop</a>
+    <a href="/#templates">Templates</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </div>
+</footer>
+</body>
+</html>
