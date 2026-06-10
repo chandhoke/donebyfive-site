@@ -1,4 +1,46 @@
+# DoneByFive — robots.txt
+# Goal: be findable in normal search AND AI answer engines (retrieval),
+# while blocking bulk AI *training* scrapers.
+
 User-agent: *
 Allow: /
+
+# --- AI search / answer engines: ALLOWED (so we appear in AI results) ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# --- Bulk AI training scrapers: BLOCKED ---
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
 
 Sitemap: https://donebyfive.com/sitemap.xml
