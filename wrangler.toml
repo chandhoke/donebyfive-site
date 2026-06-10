@@ -8,6 +8,11 @@ compatibility_date = "2026-06-09"
 [assets]
 directory = "./public"
 binding = "ASSETS"
+# Run the Worker before serving assets so the www→apex redirect applies to
+# every path (not just non-asset routes).
+run_worker_first = true
+# Serve a custom, on-brand 404 page for unknown routes.
+not_found_handling = "404-page"
 
 # D1 database that stores newsletter signups.
 # Create it once with:  npx wrangler d1 create donebyfive-subscribers
