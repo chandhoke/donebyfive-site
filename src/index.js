@@ -6,6 +6,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // Canonical host: redirect www → apex (301), preserving path + query.
+    if (url.hostname === "www.donebyfive.com") {
+      url.hostname = "donebyfive.com";
+      return Response.redirect(url.toString(), 301);
+    }
+
     if (url.pathname === "/api/subscribe") {
       if (request.method !== "POST") {
         return json({ ok: false, error: "Method not allowed." }, 405);
