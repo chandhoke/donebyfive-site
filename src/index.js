@@ -1,6 +1,7 @@
 // DoneByFive Worker
 // - Serves the static landing page (via the ASSETS binding).
 // - Handles newsletter signups at POST /api/subscribe, storing them in D1.
+// Fix: trigger redeploy via wrangler.toml (restores ASSETS binding)
 
 export default {
   async fetch(request, env) {
