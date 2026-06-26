@@ -8,6 +8,8 @@ compatibility_date = "2026-06-09"
 [assets]
 directory = "./public"
 binding = "ASSETS"
+# Serve clean URLs explicitly: /foo → /foo.html, /dir/ → /dir/index.html.
+html_handling = "auto-trailing-slash"
 # Run the Worker before serving assets so the www→apex redirect applies to
 # every path (not just non-asset routes).
 run_worker_first = true

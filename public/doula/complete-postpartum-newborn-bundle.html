@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--
-  NOTE FOR THE OWNER: Draft product page for the doula/birth vertical.
-  Please FACT-CHECK the "What's inside" list and price against the actual
-  bundle (SKU DBF_B9_335) before this goes live. CTA points at the Etsy shop
-  root because no per-listing URL exists yet — swap in the listing URL once
-  the draft is published and activated in Shop Manager.
--->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -23,6 +16,7 @@
 <meta property="og:description" content="The entire fourth-trimester library: 30+ bilingual EN/FR handouts and logs across recovery, feeding, newborn care, wellbeing, and tracking.">
 <meta property="og:image" content="https://donebyfive.com/og-doula.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://donebyfive.com/og-doula.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -63,6 +57,10 @@
   .footer-links{display:flex;gap:20px;flex-wrap:wrap;}
   .footer-links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
   .footer-links a:hover{color:var(--ink);}
+
+/* a11y: visible keyboard focus + reduced-motion (site audit) */
+:focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
 </style>
 <script type="application/ld+json">
 {
@@ -140,7 +138,7 @@
     <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Buy on Etsy →</a>
   </div>
 
-  <h2>Related templates</h2>
+  <h2>Related toolkits</h2>
   <ul>
     <li><a class="inline" href="/doula/postpartum-recovery-pack">Postpartum Recovery Pack</a> — the recovery guides on their own, for the healing weeks.</li>
     <li><a class="inline" href="/doula/newborn-feeding-pack">Newborn Feeding Pack</a> — every feeding journey, covered in five plain-language guides.</li>
