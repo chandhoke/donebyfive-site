@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modèles pour opérations de détail (Excel et Sheets) | DoneByFive</title>
+<meta name="description" content="Modèles de feuilles de calcul pour opérations de détail, Excel et Google Sheets — suivi des ventes d'épicerie, de réparation d'appareils et des loyers. Bilingue (EN/FR), téléchargement instantané.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://donebyfive.com/fr/templates/">
+<link rel="alternate" hreflang="fr-ca" href="https://donebyfive.com/fr/templates/">
+<link rel="alternate" hreflang="en-ca" href="https://donebyfive.com/templates/">
+<link rel="alternate" hreflang="x-default" href="https://donebyfive.com/templates/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DoneByFive">
+<meta property="og:url" content="https://donebyfive.com/fr/templates/">
+<meta property="og:title" content="Modèles pour opérations de détail — Excel et Google Sheets">
+<meta property="og:description" content="Modèles de feuilles de calcul pour les opérations d'épicerie, de réparation d'appareils et de gestion locative. Bilingue (EN/FR), prix en dollars canadiens, téléchargement instantané.">
+<meta property="og:image" content="https://donebyfive.com/og-templates.png">
+<meta property="og:locale" content="fr_CA">
+<meta property="og:locale:alternate" content="en_CA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://donebyfive.com/og-templates.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111110;--ink-60:#444440;--stone:#F7F6F2;--stone-3:#E4E2DC;--stone-5:#9E9B94;--moss:#2D4A35;--moss-mid:#3D6347;--moss-lite:#5A8A68;--moss-pale:#E8F0EA;--white:#fff;--f-serif:'Instrument Serif',Georgia,serif;--f-sans:'Geist',system-ui,sans-serif;--f-mono:'Geist Mono','Courier New',monospace;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--stone);font-family:var(--f-sans);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px;}
+  header{border-bottom:1px solid var(--stone-3);padding:20px 0;margin-bottom:40px;}
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+  .disc{width:28px;height:28px;border-radius:50%;background:var(--moss);display:flex;align-items:center;justify-content:center;font-family:var(--f-serif);font-style:italic;font-size:15px;color:var(--stone);}
+  .brand-name{font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);}
+  main{padding-bottom:80px;}
+  .crumb{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;color:var(--stone-5);margin-bottom:24px;}
+  .crumb a{color:var(--stone-5);text-decoration:none;}
+  .crumb a:hover{color:var(--ink);}
+  h1{font-family:var(--f-serif);font-size:48px;font-weight:400;line-height:1.05;margin-bottom:14px;}
+  .lede{font-size:18px;color:var(--ink-60);margin-bottom:40px;max-width:640px;}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .card{background:var(--white);border:1px solid var(--stone-3);border-radius:14px;padding:24px;display:flex;flex-direction:column;}
+  .card .cat{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--moss-lite);margin-bottom:8px;}
+  .card h2{font-family:var(--f-serif);font-size:24px;font-weight:400;line-height:1.1;margin-bottom:8px;}
+  .card h2 a{color:inherit;text-decoration:none;}
+  .card h2 a:hover{color:var(--moss);}
+  .card p{font-size:14px;color:var(--ink-60);margin-bottom:16px;}
+  .card .row{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .price{font-weight:600;font-size:18px;}
+  .view{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--moss);text-decoration:none;}
+  .view:hover{text-decoration:underline;}
+  a.inline{color:var(--moss-lite);}
+  h2.section{font-family:var(--f-serif);font-size:27px;font-weight:400;margin:48px 0 12px;}
+  p{font-size:16px;color:var(--ink-60);margin-bottom:16px;}
+  .back{display:inline-block;margin-top:36px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
+  .back:hover{color:var(--ink);}
+  footer{border-top:1px solid var(--stone-3);padding:24px 0;}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+  .footer-links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
+  .footer-links a:hover{color:var(--ink);}
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}h1{font-size:38px;}}
+
+/* a11y: visible keyboard focus + reduced-motion (site audit) */
+:focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Accueil","item":"https://donebyfive.com/fr/"},
+      {"@type":"ListItem","position":2,"name":"Modèles","item":"https://donebyfive.com/fr/templates/"}
+    ]},
+    {"@type":"CollectionPage","name":"Modèles pour opérations de détail","url":"https://donebyfive.com/fr/templates/","description":"Modèles de feuilles de calcul pour opérations de détail, pour Excel et Google Sheets, conçus par un véritable exploitant de commerce en Alberta.","isPartOf":{"@type":"WebSite","name":"DoneByFive","url":"https://donebyfive.com/"}},
+    {"@type":"ItemList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Suivi des ventes par catégorie pour épicerie","url":"https://donebyfive.com/fr/templates/grocery-sales-tracker","item":{"@type":"Product","name":"Suivi des ventes par catégorie pour épicerie","url":"https://donebyfive.com/fr/templates/grocery-sales-tracker","image":"https://donebyfive.com/og-grocery.png","offers":{"@type":"Offer","price":"18.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive"}}},
+      {"@type":"ListItem","position":2,"name":"Suivi des réparations d'appareils et calculateur de marge","url":"https://donebyfive.com/fr/templates/device-repair-job-tracker","item":{"@type":"Product","name":"Suivi des réparations d'appareils et calculateur de marge","url":"https://donebyfive.com/fr/templates/device-repair-job-tracker","image":"https://donebyfive.com/og-repair.png","offers":{"@type":"Offer","price":"22.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive"}}},
+      {"@type":"ListItem","position":3,"name":"Registre des loyers et suivi des paiements pour propriétaire","url":"https://donebyfive.com/fr/templates/landlord-rent-tracker","item":{"@type":"Product","name":"Registre des loyers et suivi des paiements pour propriétaire","url":"https://donebyfive.com/fr/templates/landlord-rent-tracker","image":"https://donebyfive.com/og-landlord.png","offers":{"@type":"Offer","price":"20.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive"}}},
+      {"@type":"ListItem","position":4,"name":"Trousses pour doulas et accouchement","url":"https://donebyfive.com/fr/doula/"}
+    ]}
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="wrap"><a href="/fr/" class="brand"><span class="disc">5</span><span class="brand-name">DoneByFive</span></a></div>
+</header>
+
+<main class="wrap">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/fr/">Accueil</a> / Modèles</nav>
+
+  <h1>Modèles pour opérations de détail</h1>
+  <p class="lede">Des modèles de feuilles de calcul pour Excel et Google Sheets destinés aux petites entreprises, conçus à partir d'une véritable expérience en magasin — bilingues (EN/FR), prix en dollars canadiens et téléchargement instantané. Voici les outils de suivi en vedette; le catalogue complet se trouve sur Etsy.</p>
+
+  <p>Chaque modèle vise une tâche précise qu'une petite entreprise de détail doit réellement accomplir chaque semaine — suivre les ventes par catégorie, établir le coût des réparations ou tenir un registre des loyers bien à jour — plutôt que d'essayer d'être un outil tout usage. Ils sont volontairement simples : une feuille de calcul claire que vous pouvez ouvrir, comprendre et utiliser le jour même, sans nouveau logiciel à apprendre ni frais mensuels.</p>
+
+  <div class="grid">
+    <div class="card">
+      <div class="cat">Détail essentiel · Épicerie</div>
+      <h2><a href="/fr/templates/grocery-sales-tracker">Suivi des ventes par catégorie pour épicerie</a></h2>
+      <p>Saisissez les ventes une seule fois et voyez automatiquement les totaux par catégorie, la variation d'une semaine à l'autre et les rayons inactifs. Conçu pour les épiceries et les dépanneurs.</p>
+      <div class="row"><span class="price">18 $ CA</span><a class="view" href="/fr/templates/grocery-sales-tracker">Voir les détails →</a></div>
+    </div>
+    <div class="card">
+      <div class="cat">Atelier de réparation</div>
+      <h2><a href="/fr/templates/device-repair-job-tracker">Suivi des réparations d'appareils et calculateur de marge</a></h2>
+      <p>Suivez chaque réparation, le coût des pièces et la main-d'œuvre, et voyez automatiquement votre marge par réparation. Conçu à partir d'opérations réelles d'atelier de réparation.</p>
+      <div class="row"><span class="price">22 $ CA</span><a class="view" href="/fr/templates/device-repair-job-tracker">Voir les détails →</a></div>
+    </div>
+    <div class="card">
+      <div class="cat">Propriétaire · Location</div>
+      <h2><a href="/fr/templates/landlord-rent-tracker">Registre des loyers et suivi des paiements pour propriétaire</a></h2>
+      <p>Suivez chaque locataire, l'état des paiements et les dates de bail. Les loyers en retard s'affichent en rouge automatiquement. Adapté à l'Alberta avec champs pour la TPS et les dépôts.</p>
+      <div class="row"><span class="price">20 $ CA</span><a class="view" href="/fr/templates/landlord-rent-tracker">Voir les détails →</a></div>
+    </div>
+    <div class="card">
+      <div class="cat">Nouveau · Doula et accouchement</div>
+      <h2><a href="/fr/doula/">Trousses pour doulas et accouchement</a></h2>
+      <p>Un deuxième créneau : des trousses bilingues (EN/FR) de préparation à l'accouchement, des ensembles pour le postpartum et le nouveau-né, et des jeux de cartes imprimables pour les doulas et les nouveaux parents. Langage clair, téléchargement instantané.</p>
+      <div class="row"><span class="price">À partir de 15 $ CA</span><a class="view" href="/fr/doula/">Découvrir la gamme →</a></div>
+    </div>
+    <div class="card">
+      <div class="cat">Plus</div>
+      <h2><a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer">66+ modèles sur Etsy</a></h2>
+      <p>Formulaires RH, outils de suivi financier et autres outils pour opérations de détail — le catalogue complet se trouve dans notre boutique Etsy, avec de nouveaux modèles ajoutés régulièrement.</p>
+      <div class="row"><span class="price">Etsy</span><a class="view" href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer">Parcourir la boutique →</a></div>
+    </div>
+  </div>
+
+  <h2 class="section">Conçu par un exploitant, pas par un designer</h2>
+  <p>Chaque modèle présenté ici provient de l'exploitation d'une épicerie et d'un atelier de réparation d'appareils en Alberta, au Canada — chaque onglet et chaque formule existe parce qu'un véritable quart de travail en avait besoin. Ils s'ouvrent dans Excel ou Google Sheets sans macros, modules complémentaires ni abonnements, et sont livrés en version bilingue, en français et en anglais, avec le formatage en dollars canadiens partout.</p>
+
+  <p>À qui s'adressent-ils? Aux exploitants indépendants — propriétaires de dépanneurs et d'épiceries, ateliers de réparation de téléphones et d'ordinateurs, et petits propriétaires immobiliers — qui veulent des chiffres clairs sans logiciel d'entreprise. Quoi que vous exploitiez, les mêmes éléments restent constants d'un modèle à l'autre : des libellés bilingues, en anglais et en français, dans un seul fichier, le formatage en dollars canadiens, des champs pour la TPS et propres à l'Alberta là où ça compte, et un téléchargement unique qui vous appartient pour toujours. Choisissez l'outil de suivi qui correspond à la tâche devant vous, effacez les données d'exemple, et vous travaillez avec vos propres chiffres en quelques minutes.</p>
+
+  <p>Le catalogue s'enrichit avec le temps — de nouveaux modèles pour opérations de détail, des formulaires RH et d'horaires, et des outils de suivi financier sont ajoutés régulièrement à la boutique Etsy, et la sélection en vedette ci-dessus est mise à jour à mesure que les plus utiles arrivent. Si vous voulez être informé dès qu'une nouveauté paraît, l'<a class="inline" href="/fr/#capture">infolettre</a> envoie un court courriel par lancement. Vous préférez d'abord parler de cas précis? Lisez la présentation complète de n'importe quel modèle ci-dessus avant d'acheter — chaque page indique pour qui il est conçu, ce qui est inclus et comment ça fonctionne.</p>
+
+  <a href="/fr/" class="back">← Retour à DoneByFive</a>
+</main>
+
+<footer>
+  <div class="wrap footer-links">
+    <a href="/fr/templates/">Modèles</a>
+    <a href="/fr/doula/">Doula et accouchement</a>
+    <a href="/fr/#about">À propos</a>
+    <a href="/fr/#capture">Infolettre</a>
+    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer">Boutique Etsy</a>
+    <a href="/fr/privacy">Confidentialité</a>
+    <a href="/fr/terms">Conditions</a>
+  </div>
+</footer>
+</body>
+</html>
