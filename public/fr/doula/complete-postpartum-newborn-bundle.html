@@ -66,6 +66,14 @@
 /* a11y: visible keyboard focus + reduced-motion (site audit) */
 :focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+/* language switcher */
+.lang-switch{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;}
+.lang-switch a{color:var(--stone-5);text-decoration:none;}
+.lang-switch a:hover{color:var(--ink);}
+.lang-switch .cur{color:var(--ink);font-weight:600;}
+.lang-switch .lang-sep{color:#C8C5BC;}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
 </style>
 <script type="application/ld+json">
 {
@@ -89,7 +97,7 @@
 </head>
 <body>
 <header>
-  <div class="wrap"><a href="/fr/" class="brand"><span class="disc">5</span><span class="brand-name">DoneByFive</span></a></div>
+  <div class="wrap"><a href="/fr/" class="brand"><span class="disc">5</span><span class="brand-name">DoneByFive</span></a><div class="lang-switch" aria-label="Language"><a href="/doula/complete-postpartum-newborn-bundle" hreflang="en-CA" lang="en">EN</a><span class="lang-sep">/</span><span class="cur" aria-current="page">FR</span></div></div>
 </header>
 
 <main class="wrap">

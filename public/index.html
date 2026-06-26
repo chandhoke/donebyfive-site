@@ -7,6 +7,7 @@
 <meta name="description" content="Practical bilingual (EN/FR) digital downloads from Alberta — retail-operations spreadsheet templates and doula & birth toolkits. Buy once, instant download.">
 <link rel="canonical" href="https://donebyfive.com/">
 <link rel="alternate" hreflang="en-ca" href="https://donebyfive.com/">
+<link rel="alternate" hreflang="fr-ca" href="https://donebyfive.com/fr/">
 <link rel="alternate" hreflang="x-default" href="https://donebyfive.com/">
 
 <!-- Favicon -->
@@ -24,6 +25,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="DoneByFive — bilingual templates & doula toolkits, built in Alberta.">
 <meta property="og:locale" content="en_CA">
+<meta property="og:locale:alternate" content="fr_CA">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
@@ -645,6 +647,13 @@ footer {
 /* a11y: visible keyboard focus + reduced-motion (site audit) */
 :focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+/* language switcher */
+.lang-switch{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;}
+.lang-switch a{color:var(--stone-5);text-decoration:none;}
+.lang-switch a:hover{color:var(--ink);}
+.lang-switch .cur{color:var(--ink);font-weight:600;}
+.lang-switch .lang-sep{color:#C8C5BC;}
 </style>
 </head>
 <body>
@@ -658,6 +667,7 @@ footer {
     <span class="nav-name">DoneByFive</span>
   </a>
   <div class="nav-actions">
+    <div class="lang-switch" aria-label="Language"><span class="cur" aria-current="page">EN</span><span class="lang-sep">/</span><a href="/fr/" hreflang="fr-CA" lang="fr">FR</a></div>
     <a href="/templates/" class="nav-link">Templates</a>
     <a href="/doula/" class="nav-link">Doula</a>
     <a href="#about" class="nav-link">About</a>
