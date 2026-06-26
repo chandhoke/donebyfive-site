@@ -16,6 +16,7 @@
 <meta property="og:description" content="Spreadsheet templates for grocery, device-repair, and landlord operations. Bilingual EN/FR, Canadian pricing, instant download.">
 <meta property="og:image" content="https://donebyfive.com/og-templates.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://donebyfive.com/og-templates.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -55,6 +56,10 @@
   .footer-links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
   .footer-links a:hover{color:var(--ink);}
   @media(max-width:640px){.grid{grid-template-columns:1fr;}h1{font-size:38px;}}
+
+/* a11y: visible keyboard focus + reduced-motion (site audit) */
+:focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
 </style>
 <script type="application/ld+json">
 {
@@ -134,6 +139,7 @@
 <footer>
   <div class="wrap footer-links">
     <a href="/templates/">Templates</a>
+    <a href="/doula/">Doula &amp; Birth</a>
     <a href="/#about">About</a>
     <a href="/#capture">Newsletter</a>
     <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer">Etsy Shop</a>

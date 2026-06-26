@@ -23,6 +23,10 @@
   a.btn:hover{background:var(--moss-mid);}
   a.ghost{color:rgba(255,255,255,0.6);font-size:14px;padding:12px 18px;text-decoration:none;border:1px solid rgba(255,255,255,0.18);border-radius:6px;transition:color .15s,border-color .15s;}
   a.ghost:hover{color:#fff;border-color:rgba(255,255,255,0.4);}
+
+/* a11y: visible keyboard focus + reduced-motion (site audit) */
+:focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
 </style>
 </head>
 <body>
@@ -32,7 +36,8 @@
   <p>We couldn't find what you were looking for. It may have moved, or the link might be off. Let's get you back to something useful.</p>
   <div class="actions">
     <a class="btn" href="/templates/">Browse templates →</a>
-    <a class="ghost" href="/">Back to home</a>
+    <a class="ghost" href="/doula/">Doula &amp; birth</a>
+    <a class="ghost" href="/">Home</a>
   </div>
 </body>
 </html>
