@@ -84,10 +84,11 @@ async function handleSubscribe(request, env) {
 }
 
 // ---------------------------------------------------------------------------
-// Private chat (Emily <-> Muse)
+// Private chat (Emily <-> Mimi)
 // ---------------------------------------------------------------------------
 // Auth: X-Chat-Key must match env.CHAT_KEY_EMILY (sender "Emily") or
-// env.CHAT_KEY_MUSE (sender "Muse"). If neither variable is set, the API
+// env.CHAT_KEY_MUSE (sender "Mimi"). The variable is still named CHAT_KEY_MUSE;
+// only the display name changed. If neither variable is set, the API
 // answers 503. No keys are ever stored in this file or the repository.
 
 const MAX_UPLOAD_BYTES = 2 * 1024 * 1024;
@@ -112,7 +113,7 @@ function chatIdentity(request, env) {
   const key = request.headers.get("X-Chat-Key") || "";
   if (!env.CHAT_KEY_EMILY && !env.CHAT_KEY_MUSE) return "unconfigured";
   if (key && env.CHAT_KEY_EMILY && key === env.CHAT_KEY_EMILY) return "Emily";
-  if (key && env.CHAT_KEY_MUSE && key === env.CHAT_KEY_MUSE) return "Muse";
+  if (key && env.CHAT_KEY_MUSE && key === env.CHAT_KEY_MUSE) return "Mimi";
   return null;
 }
 
