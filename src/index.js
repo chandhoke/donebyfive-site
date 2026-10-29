@@ -4,6 +4,16 @@
 // - Private two-assistant chat at /api/chat/*, storing messages in D1.
 // Fix: trigger redeploy via wrangler.toml (restores ASSETS binding)
 
+// - Password-gated Emily planner at /emily-planner/, with a shared
+//   strategy-notes API at /api/planner/notes, storing notes in D1.
+//   Gate: HTTP Basic Auth, username "emily", password checked only by
+//   SHA-256 hash (the password itself is never in this repository).
+//   This keeps casual visitors out. It is a shared-password gate for a
+//   planner that holds no private credentials, not enterprise auth.
+const PLANNER_USER = "emily";
+const PLANNER_PASSWORD_HASH =
+  "e714ee622b5881114f8f43d69246e20a81c5a514ba9c00f130c3e9cac314132c";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -25,10 +35,109 @@ export default {
       return handleChat(request, env, url);
     }
 
+    if (url.pathname.startsWith("/api/planner/")) {
+      if (!(await plannerAuthorized(request))) {
+        return plannerUnauthorized();
+      }
+      return handlePlanner(request, env, url);
+    }
+
+    if (
+      url.pathname === "/emily-planner" ||
+      url.pathname.startsWith("/emily-planner/")
+    ) {
+      if (!(await plannerAuthorized(request))) {
+        return plannerUnauthorized();
+      }
+    }
+
     // Everything else: serve the static site.
     return env.ASSETS.fetch(request);
   },
 };
+
+async function plannerAuthorized(request) {
+  const header = request.headers.get("Authorization") || "";
+  if (!header.startsWith("Basic ")) return false;
+  let decoded = "";
+  try {
+    decoded = atob(header.slice(6));
+  } catch {
+    return false;
+  }
+  const colon = decoded.indexOf(":");
+  if (colon < 0) return false;
+  const user = decoded.slice(0, colon);
+  const password = decoded.slice(colon + 1);
+  if (user !== PLANNER_USER) return false;
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(password)
+  );
+  const hash = [...new Uint8Array(digest)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return hash === PLANNER_PASSWORD_HASH;
+}
+
+function plannerUnauthorized() {
+  return new Response("Login required for the Emily planner.", {
+    status: 401,
+    headers: {
+      "WWW-Authenticate": 'Basic realm="Emily Planner"',
+      "cache-control": "no-store",
+    },
+  });
+}
+
+async function handlePlanner(request, env, url) {
+  if (!env.DB) {
+    return json({ ok: false, error: "Planner notes are not configured yet." }, 500);
+  }
+  try {
+    await env.DB.prepare(
+      "CREATE TABLE IF NOT EXISTS planner_notes (" +
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        "author TEXT NOT NULL, " +
+        "body TEXT NOT NULL, " +
+        "created_at INTEGER NOT NULL)"
+    ).run();
+
+    if (url.pathname === "/api/planner/notes" && request.method === "GET") {
+      const rows = await env.DB.prepare(
+        "SELECT id, author, body, created_at FROM planner_notes ORDER BY id ASC LIMIT 100"
+      ).all();
+      return json({ ok: true, notes: rows.results || [] });
+    }
+
+    if (url.pathname === "/api/planner/notes" && request.method === "POST") {
+      let data;
+      try {
+        data = await request.json();
+      } catch {
+        return json({ ok: false, error: "Could not read the note." }, 400);
+      }
+      const author = String(data.author || "").trim();
+      const body = String(data.body || "").trim();
+      if (!["Emily", "Claude", "Boss"].includes(author)) {
+        return json({ ok: false, error: "Author must be Emily, Claude, or Boss." }, 400);
+      }
+      if (!body || body.length > 2000) {
+        return json({ ok: false, error: "Write a note of 1 to 2000 characters." }, 400);
+      }
+      const result = await env.DB.prepare(
+        "INSERT INTO planner_notes (author, body, created_at) VALUES (?, ?, ?)"
+      )
+        .bind(author, body, Math.floor(Date.now() / 1000))
+        .run();
+      return json({ ok: true, id: result.meta.last_row_id });
+    }
+
+    return json({ ok: false, error: "Not found." }, 404);
+  } catch {
+    return json({ ok: false, error: "Something went wrong saving the note." }, 500);
+  }
+}
 
 async function handleSubscribe(request, env) {
   // Accept either JSON ({"email": "..."}) or a classic form POST.

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Emily Live Reel Planner</title>
+<style>
+  :root{
+    --ivory:#f7f1e6; --cream:#fffdf8; --ink:#23201c; --soft:#6f675e;
+    --green:#1a5c4a; --green-soft:#e3efe9; --rose:#b76e79; --rose-soft:#fbeeee;
+    --gold:#b8924c; --gold-soft:#f3e8d3; --line:#e6dcc8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ivory);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+  a{color:var(--green)}
+  .hero{background:linear-gradient(135deg,#1a5c4a 0%,#2a7a64 55%,#b76e79 130%);color:#fff;padding:42px 22px 34px}
+  .hero-inner{max-width:980px;margin:0 auto}
+  .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:12px;opacity:.85}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:44px;line-height:1.05;margin:10px 0 8px;font-weight:600}
+  .hero p{max-width:720px;margin:0;opacity:.95;font-size:17px}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 18px 60px}
+  .gate{background:var(--cream);border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:14px;padding:16px 18px;margin:-18px 0 22px;box-shadow:0 6px 24px rgba(35,32,28,.07)}
+  .gate strong{color:var(--green)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 22px}
+  .stat{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .stat b{font-family:Georgia,serif;font-size:28px;display:block;line-height:1.1}
+  .stat span{color:var(--soft);font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:20px 20px 16px;box-shadow:0 4px 18px rgba(35,32,28,.05)}
+  .card h2{font-family:Georgia,serif;font-size:24px;margin:0 0 6px}
+  .card h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin:20px 0 6px}
+  .card p,.card li{font-size:15px}
+  .card ul{padding-left:20px;margin:8px 0}
+  .pill{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:999px;margin:2px 4px 2px 0}
+  .win{background:var(--green-soft);color:var(--green)}
+  .warn{background:var(--gold-soft);color:#7a5a1f}
+  .rose{background:var(--rose-soft);color:#8a3f49}
+  .full{grid-column:1 / -1}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;color:var(--soft);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:8px 6px;border-bottom:1px solid var(--line)}
+  td{padding:10px 6px;border-bottom:1px solid #f0e8d8;vertical-align:top}
+  .timeline{border-left:3px solid var(--gold);margin:10px 0 4px 6px;padding-left:18px}
+  .timeline div{margin:0 0 14px}
+  .timeline b{display:block}
+  .timeline span{color:var(--soft);font-size:14px}
+  .note-form{display:grid;gap:10px}
+  select,textarea,button{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--line)}
+  textarea{min-height:110px;resize:vertical}
+  button{background:var(--green);color:#fff;border:0;font-weight:700;cursor:pointer}
+  button:hover{background:#144a3b}
+  .note{border-top:1px solid #f0e8d8;padding:12px 0}
+  .note b{color:var(--green)}
+  .note small{color:var(--soft);display:block}
+  .muted{color:var(--soft);font-size:14px}
+  .footer{margin-top:28px;text-align:center;color:var(--soft);font-size:13px}
+  @media (max-width:700px){
+    h1{font-size:34px}
+    .stats{grid-template-columns:1fr 1fr}
+    .grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Emily Live &nbsp;|&nbsp; @its.emily.live</div>
+    <h1>Reel Planner, kept cozy<br>and kept honest.</h1>
+    <p>One shared board for what has posted, what is working, what is not, and what comes next. Emily updates the board. Claude adds strategy in the notes. Boss keeps the final say.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="gate">
+    <strong>Private board.</strong> This page sits behind the shared planner login. It holds public reel links and strategy only, no private credentials, no payment details, no personal data. If you have the login, you can read it and leave a strategy note below.
+    <br><span class="muted">Updated Oct 29, 2026, Edmonton time. Next review: Sunday analytics, Nov 1 at 18:11.</span>
+  </div>
+
+  <section class="stats">
+    <div class="stat"><b>153,907</b><span>Viral reel views, Oct 25</span></div>
+    <div class="stat"><b>78,620</b><span>Good morning boost, Oct 27</span></div>
+    <div class="stat"><b>74,586</b><span>Evening wind-down winner, Oct 27</span></div>
+    <div class="stat"><b>241</b><span>Followers, Oct 29 pull</span></div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2>What is working</h2>
+      <span class="pill win">Winning family</span>
+      <p>Direct personal address plus cozy at-home intimacy. Speak only to the viewer. Keep it warm, face first, real motion, 10 seconds.</p>
+      <ul>
+        <li>Viral reel: 153,907 views, 114,700 reach, 7.17s average watch. <a href="https://www.instagram.com/reel/De7yitpj9xs/">Watch it</a></li>
+        <li>Good morning boost: 78,620 views, 62,053 reach, 62.6% average watch. <a href="https://www.instagram.com/reel/DfAC1FeABP7/">Watch it</a></li>
+        <li>Evening wind-down: 74,586 views, 59,991 reach, 6.08s average watch. <a href="https://www.instagram.com/reel/DfBRNC3EqEx">Watch it</a></li>
+      </ul>
+      <p class="muted">Baseline before the fix: about 0.72 follows per 1,000 views across 17 reels, about 330,000 views in total.</p>
+    </section>
+
+    <section class="card">
+      <h2>What is not working</h2>
+      <span class="pill rose">Do not repeat</span>
+      <ul>
+        <li>Scenic or fashion-diary reels with no direct hook: under 2,000 views.</li>
+        <li>Lipstick mirror GRWM on Instagram: 119 views, versus 1,322 on YouTube.</li>
+        <li>Oct 27 to 30 batch reels: about 1,000 views each in early reads, far below a 5,000 median idea.</li>
+        <li>A reel that opens with a big smile and then goes silent with no story does not hold.</li>
+      </ul>
+      <p class="muted">Honest limit: the API does not give reel-attributed follows or profile visits, so this board never invents those numbers. Views, reach, and retention are the judge, plus account-level follower movement.</p>
+    </section>
+
+    <section class="card full">
+      <h2>Posted, Oct 27 to 29</h2>
+      <table>
+        <tr><th>Date</th><th>Reel</th><th>Link</th><th>Status</th></tr>
+        <tr><td>Oct 27, 19:38</td><td>Batch 1, evening wind-down</td><td><a href="https://www.instagram.com/reel/DfBRO1bgYrt/">DfBRO1bgYrt</a></td><td><span class="pill win">Live</span></td></tr>
+        <tr><td>Oct 28, 08:14</td><td>Batch 2, staying in (v1, no tongue)</td><td><a href="https://www.instagram.com/reel/DfCnuw0ks8A/">DfCnuw0ks8A</a></td><td><span class="pill win">Live, v1 kept</span></td></tr>
+        <tr><td>Oct 28, 19:16</td><td>Batch 3, little softness</td><td><a href="https://www.instagram.com/reel/DfD1mPdlUJW/">DfD1mPdlUJW</a></td><td><span class="pill warn">Pin first comment in app</span></td></tr>
+        <tr><td>Oct 29, 08:45</td><td>Batch 4, best seat</td><td><a href="https://www.instagram.com/reel/DfFQGEOjzC1/">DfFQGEOjzC1</a></td><td><span class="pill warn">Pin first comment in app</span></td></tr>
+      </table>
+      <p class="muted">Daily story, Oct 29: posted, question "What are you reading this week? I need a new pick." Stories carry no on-screen AI label, per the Oct 28 rule. Disclosure is the profile AI flag plus the bio line. Reels always carry the AI label at upload plus #aigenerated.</p>
+    </section>
+
+    <section class="card full">
+      <h2>Upcoming, already scheduled</h2>
+      <div class="timeline">
+        <div><b>Thu Oct 29, 19:11, happiness boost part two</b><span>Batch 5, video built and audit-passed.</span></div>
+        <div><b>Fri Oct 30, 08:11, rainy day</b><span>Batch 6, video built and audit-passed.</span></div>
+        <div><b>Fri Oct 30, 19:11, slow evenings</b><span>Batch 7, prep only. Builds and audits first, posts only on a pass, one robe tone.</span></div>
+        <div><b>Sat Oct 31, 08:11, Halloween one-off</b><span>Reworked only: costume reveal, hat, cape, or knit, waist-up, no bare-leg focus, no leg-swipe as pitched. If it cannot be built cleanly, drop it. Excluded from the median and the Nov 1 set.</span></div>
+        <div><b>Sun Nov 1, 08:11 safer reel, 18:11 analytics, 19:11 view test</b><span>View test is record only, not a decision on its own.</span></div>
+        <div><b>Mon Nov 2, 08:11 winning &nbsp;|&nbsp; Tue Nov 3, 19:11 safer &nbsp;|&nbsp; Wed Nov 4, 08:11 winning</b><span>Daily cadence: 1 reel a day, 7 a week, plus a story at 12:11 daily.</span></div>
+        <div><b>Thu Nov 5, 19:11 safer &nbsp;|&nbsp; Fri Nov 6, 08:11 outfit &nbsp;|&nbsp; Sat Nov 7, 08:11 winning &nbsp;|&nbsp; Sun Nov 8, 08:11 safer</b><span>Fri Nov 6 is the first countdown outfit-list test: one knit, several ways, list format fixed for the first 3 outfit reels.</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Future pipeline, in test order</h2>
+      <ol>
+        <li><strong>GRWM loading 0% to 100%</strong>, safer slot only, smile or wink, no tongue beat in that test only. Winning reels keep the tongue beat.</li>
+        <li><strong>Countdown outfit list</strong>, Fri Nov 6, caption on the knit, not the evening.</li>
+        <li><strong>Specific-scene cold open</strong>, safer morning reset, reserve after GRWM.</li>
+        <li><strong>Darker evenings reel</strong>, plain evening frame test, no clocks claim. Alberta does not fall back in 2026, so no clocks-change premise is used in any reel.</li>
+        <li><strong>Sheet-ghost sign format</strong>, watch only.</li>
+        <li><strong>Remembrance Day</strong>, dropped, no reel.</li>
+      </ol>
+      <p class="muted">Built but not posted: "Not this time" reel, audit-passed, held for a slot under the auto rules. Milk mustache clip: build only, do not post, decision about Nov 1.</p>
+    </section>
+
+    <section class="card">
+      <h2>Checkpoints that decide</h2>
+      <ul>
+        <li><strong>Nov 10, 19:11:</strong> conversion peek, no judgment.</li>
+        <li><strong>Nov 11, 09:11:</strong> Morning Pack build and list at $5, Etsy AI disclosure checked first.</li>
+        <li><strong>Nov 13:</strong> third outfit reel judgment.</li>
+        <li><strong>Nov 20, 19:11:</strong> conversion test. Primary read is hit rate, share of post-fix reels at 10,000+ views. Under 30 post-fix follows by then means too small to judge.</li>
+        <li><strong>Dec 1:</strong> re-forecast. <strong>Dec 15:</strong> first sale, soft marker.</li>
+        <li><strong>Jan 31, 2027:</strong> $50 cumulative review. <strong>Apr 30, 2027:</strong> $150/month run-rate checkpoint.</li>
+      </ul>
+      <p class="muted">Post-fix clock started Oct 28, 2026 at 09:44, after the bio line and pins were done. That is the clean cut for judging the new mix.</p>
+    </section>
+
+    <section class="card full">
+      <h2>Strategy notes, for Emily and Claude</h2>
+      <p class="muted">Leave a short strategy note here. Emily reads these before the next build, and Boss passes Claude's notes here or in chat. Notes are shared with everyone who has the planner login, so keep them to reel strategy only.</p>
+      <form class="note-form" id="noteForm">
+        <select id="noteAuthor" aria-label="Author">
+          <option>Emily</option>
+          <option>Claude</option>
+          <option>Boss</option>
+        </select>
+        <textarea id="noteBody" maxlength="2000" placeholder="What is working, what should change, and what should we test next?" required></textarea>
+        <button type="submit">Leave a strategy note</button>
+        <div class="muted" id="noteStatus"></div>
+      </form>
+      <div id="notesList"></div>
+    </section>
+  </div>
+
+  <p class="footer">Emily Live, @its.emily.live &nbsp;|&nbsp; AI virtual creator &nbsp;|&nbsp; Montreal, Mile End &nbsp;|&nbsp; Planner hosted on donebyfive.com, behind the shared login.</p>
+</main>
+
+<script>
+async function loadNotes(){
+  const list = document.getElementById('notesList');
+  try{
+    const res = await fetch('/api/planner/notes', {credentials:'same-origin'});
+    const data = await res.json();
+    if(!data.ok){ list.innerHTML = '<p class="muted">Notes could not be loaded yet.</p>'; return; }
+    if(!data.notes.length){ list.innerHTML = '<p class="muted">No strategy notes yet. Be the first to leave one.</p>'; return; }
+    list.innerHTML = data.notes.map(function(n){
+      const d = new Date(n.created_at * 1000);
+      const safe = String(n.body).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      return '<div class="note"><b>' + n.author + '</b><small>' + d.toLocaleString() + '</small><div>' + safe + '</div></div>';
+    }).join('');
+  }catch(e){
+    list.innerHTML = '<p class="muted">Notes could not be loaded yet.</p>';
+  }
+}
+document.getElementById('noteForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const status = document.getElementById('noteStatus');
+  status.textContent = 'Saving...';
+  try{
+    const res = await fetch('/api/planner/notes', {
+      method:'POST', credentials:'same-origin',
+      headers:{'content-type':'application/json'},
+      body: JSON.stringify({author: document.getElementById('noteAuthor').value, body: document.getElementById('noteBody').value})
+    });
+    const data = await res.json();
+    if(!data.ok){ status.textContent = data.error || 'Could not save the note.'; return; }
+    document.getElementById('noteBody').value = '';
+    status.textContent = 'Note saved.';
+    loadNotes();
+  }catch(err){
+    status.textContent = 'Could not save the note.';
+  }
+});
+loadNotes();
+</script>
+</body>
+</html>
