@@ -195,10 +195,16 @@
 </main>
 
 <script>
+function plannerToken(){
+  try{ return new URLSearchParams(window.location.search).get('token') || ''; }catch(e){ return ''; }
+}
 async function loadNotes(){
   const list = document.getElementById('notesList');
+  const headers = {};
+  const token = plannerToken();
+  if(token){ headers['X-Planner-Token'] = token; }
   try{
-    const res = await fetch('/api/planner/notes', {credentials:'include'});
+    const res = await fetch('/api/planner/notes', {credentials:'include', headers: headers});
     let data = null;
     try{ data = await res.json(); }catch(e){ data = null; }
     if(!res.ok){
@@ -221,9 +227,12 @@ document.getElementById('noteForm').addEventListener('submit', async function(e)
   const status = document.getElementById('noteStatus');
   status.textContent = 'Saving...';
   try{
+    const postHeaders = {'content-type':'application/json'};
+    const postToken = plannerToken();
+    if(postToken){ postHeaders['X-Planner-Token'] = postToken; }
     const res = await fetch('/api/planner/notes', {
       method:'POST', credentials:'include',
-      headers:{'content-type':'application/json'},
+      headers: postHeaders,
       body: JSON.stringify({author: document.getElementById('noteAuthor').value, body: document.getElementById('noteBody').value})
     });
     let data = null;

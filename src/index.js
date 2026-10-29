@@ -13,6 +13,13 @@
 const PLANNER_USER = "emily";
 const PLANNER_PASSWORD_HASH =
   "e714ee622b5881114f8f43d69246e20a81c5a514ba9c00f130c3e9cac314132c";
+// Claude-only direct-access token, stored only as a hash. This token is
+// separate from the shared planner password, so it can be revoked on its
+// own by removing its hash here, without changing the password for Boss
+// and Emily. The token itself is never in this repository.
+const PLANNER_TOKEN_HASHES = [
+  "6d68c312898d81e4932ddb5ee3bba0533dfa6dce6bcaeb2ebdf63a66800769a0",
+];
 
 export default {
   async fetch(request, env) {
@@ -36,7 +43,7 @@ export default {
     }
 
     if (url.pathname.startsWith("/api/planner/")) {
-      if (!(await plannerAuthorized(request))) {
+      if (!(await plannerAuthorized(request, url))) {
         return plannerUnauthorized();
       }
       return handlePlanner(request, env, url);
@@ -46,7 +53,7 @@ export default {
       url.pathname === "/emily-planner" ||
       url.pathname.startsWith("/emily-planner/")
     ) {
-      if (!(await plannerAuthorized(request))) {
+      if (!(await plannerAuthorized(request, url))) {
         return plannerUnauthorized();
       }
     }
@@ -56,7 +63,27 @@ export default {
   },
 };
 
-async function plannerAuthorized(request) {
+async function sha256Hex(text) {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(text)
+  );
+  return [...new Uint8Array(digest)]
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
+
+async function plannerAuthorized(request, url) {
+  // Direct-access token route, for Claude: a token in the URL query or
+  // in the X-Planner-Token header, checked only by hash. No password
+  // typing is involved on this route.
+  const token =
+    (url && url.searchParams.get("token")) ||
+    request.headers.get("X-Planner-Token") ||
+    "";
+  if (token && PLANNER_TOKEN_HASHES.includes(await sha256Hex(token))) {
+    return true;
+  }
   const header = request.headers.get("Authorization") || "";
   if (!header.startsWith("Basic ")) return false;
   let decoded = "";
@@ -70,14 +97,7 @@ async function plannerAuthorized(request) {
   const user = decoded.slice(0, colon);
   const password = decoded.slice(colon + 1);
   if (user !== PLANNER_USER) return false;
-  const digest = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(password)
-  );
-  const hash = [...new Uint8Array(digest)]
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return hash === PLANNER_PASSWORD_HASH;
+  return (await sha256Hex(password)) === PLANNER_PASSWORD_HASH;
 }
 
 function plannerUnauthorized() {
