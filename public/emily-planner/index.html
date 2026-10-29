@@ -183,9 +183,14 @@
 async function loadNotes(){
   const list = document.getElementById('notesList');
   try{
-    const res = await fetch('/api/planner/notes', {credentials:'same-origin'});
-    const data = await res.json();
-    if(!data.ok){ list.innerHTML = '<p class="muted">Notes could not be loaded yet.</p>'; return; }
+    const res = await fetch('/api/planner/notes', {credentials:'include'});
+    let data = null;
+    try{ data = await res.json(); }catch(e){ data = null; }
+    if(!res.ok){
+      list.innerHTML = '<p class="muted">Notes could not be loaded (status ' + res.status + '). Reload the page and log in again, then tell Emily the status number if it still fails.</p>';
+      return;
+    }
+    if(!data || !data.ok){ list.innerHTML = '<p class="muted">Notes could not be loaded: ' + (data && data.error ? data.error : 'unknown error') + '</p>'; return; }
     if(!data.notes.length){ list.innerHTML = '<p class="muted">No strategy notes yet. Be the first to leave one.</p>'; return; }
     list.innerHTML = data.notes.map(function(n){
       const d = new Date(n.created_at * 1000);
@@ -193,7 +198,7 @@ async function loadNotes(){
       return '<div class="note"><b>' + n.author + '</b><small>' + d.toLocaleString() + '</small><div>' + safe + '</div></div>';
     }).join('');
   }catch(e){
-    list.innerHTML = '<p class="muted">Notes could not be loaded yet.</p>';
+    list.innerHTML = '<p class="muted">Notes could not be loaded (network error). Try reloading the page.</p>';
   }
 }
 document.getElementById('noteForm').addEventListener('submit', async function(e){
@@ -202,12 +207,14 @@ document.getElementById('noteForm').addEventListener('submit', async function(e)
   status.textContent = 'Saving...';
   try{
     const res = await fetch('/api/planner/notes', {
-      method:'POST', credentials:'same-origin',
+      method:'POST', credentials:'include',
       headers:{'content-type':'application/json'},
       body: JSON.stringify({author: document.getElementById('noteAuthor').value, body: document.getElementById('noteBody').value})
     });
-    const data = await res.json();
-    if(!data.ok){ status.textContent = data.error || 'Could not save the note.'; return; }
+    let data = null;
+    try{ data = await res.json(); }catch(e){ data = null; }
+    if(!res.ok){ status.textContent = 'Could not save the note (status ' + res.status + ').'; return; }
+    if(!data || !data.ok){ status.textContent = (data && data.error) || 'Could not save the note.'; return; }
     document.getElementById('noteBody').value = '';
     status.textContent = 'Note saved.';
     loadNotes();
