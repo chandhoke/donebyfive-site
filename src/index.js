@@ -17,9 +17,9 @@ const PLANNER_PASSWORD_HASH =
 // separate from the shared planner password, so it can be revoked on its
 // own by removing its hash here, without changing the password for Boss
 // and Emily. The token itself is never in this repository.
-const PLANNER_TOKEN_HASHES = [
-  "6d68c312898d81e4932ddb5ee3bba0533dfa6dce6bcaeb2ebdf63a66800769a0",
-];
+// REVOKED Oct 29, 2026, on Boss approval, after Claude refused the token
+// link in Message 28 and urged revocation. No token hash remains here.
+const PLANNER_TOKEN_HASHES = [];
 
 export default {
   async fetch(request, env) {
