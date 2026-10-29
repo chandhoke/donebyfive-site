@@ -4,77 +4,92 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Emily Live Reel Planner</title>
+<title>Emily Live | Executive Reel Planner</title>
 <style>
   :root{
-    --ivory:#f7f1e6; --cream:#fffdf8; --ink:#23201c; --soft:#6f675e;
-    --green:#1a5c4a; --green-soft:#e3efe9; --rose:#b76e79; --rose-soft:#fbeeee;
-    --gold:#b8924c; --gold-soft:#f3e8d3; --line:#e6dcc8;
+    --navy:#10222e; --navy2:#16324a; --gold:#b8924c; --gold-soft:#f3e8d3;
+    --ivory:#f4f1ea; --cream:#ffffff; --ink:#1d242b; --soft:#5f6b75; --line:#dde3e6;
+    --green:#1a5c4a; --green-soft:#e3efe9; --rose:#8a3f49; --rose-soft:#fbeeee;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ivory);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
-  a{color:var(--green)}
-  .hero{background:linear-gradient(135deg,#1a5c4a 0%,#2a7a64 55%,#b76e79 130%);color:#fff;padding:42px 22px 34px}
-  .hero-inner{max-width:980px;margin:0 auto}
-  .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:12px;opacity:.85}
-  h1{font-family:Georgia,"Times New Roman",serif;font-size:44px;line-height:1.05;margin:10px 0 8px;font-weight:600}
-  .hero p{max-width:720px;margin:0;opacity:.95;font-size:17px}
-  .wrap{max-width:980px;margin:0 auto;padding:24px 18px 60px}
-  .gate{background:var(--cream);border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:14px;padding:16px 18px;margin:-18px 0 22px;box-shadow:0 6px 24px rgba(35,32,28,.07)}
-  .gate strong{color:var(--green)}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 22px}
-  .stat{background:var(--cream);border:1px solid var(--line);border-radius:14px;padding:16px}
-  .stat b{font-family:Georgia,serif;font-size:28px;display:block;line-height:1.1}
-  .stat span{color:var(--soft);font-size:13px}
+  a{color:var(--green);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .topbar{background:var(--navy);color:#fff}
+  .topbar-inner{max-width:1020px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+  .topbar-inner b{color:var(--gold)}
+  .hero{background:linear-gradient(120deg,var(--navy) 0%,var(--navy2) 62%,#1a5c4a 100%);color:#fff;padding:44px 22px 36px;border-bottom:4px solid var(--gold)}
+  .hero-inner{max-width:1020px;margin:0 auto}
+  .eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:12px;color:#c9d6dd}
+  h1{font-family:Georgia,"Times New Roman",serif;font-size:46px;line-height:1.05;margin:12px 0 10px;font-weight:600;letter-spacing:-.01em}
+  .hero p{max-width:760px;margin:0;font-size:17px;color:#dbe6ea}
+  .wrap{max-width:1020px;margin:0 auto;padding:24px 18px 60px}
+  .gate{background:var(--cream);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:12px;padding:18px 20px;margin:-18px 0 20px;box-shadow:0 8px 28px rgba(16,34,46,.08)}
+  .gate strong{color:var(--navy)}
+  .exec{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 20px}
+  .exec div{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .exec small{display:block;color:var(--soft);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+  .exec b{font-family:Georgia,serif;font-size:17px;font-weight:600}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 20px}
+  .stat{background:var(--navy);color:#fff;border-radius:12px;padding:18px}
+  .stat b{font-family:Georgia,serif;font-size:30px;display:block;line-height:1.1}
+  .stat span{color:#b9c6cd;font-size:13px}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .card{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:20px 20px 16px;box-shadow:0 4px 18px rgba(35,32,28,.05)}
-  .card h2{font-family:Georgia,serif;font-size:24px;margin:0 0 6px}
-  .card h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin:20px 0 6px}
+  .card{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:22px 22px 18px;box-shadow:0 4px 16px rgba(16,34,46,.04)}
+  .card h2{font-family:Georgia,serif;font-size:24px;margin:0 0 6px;color:var(--navy)}
+  .card h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin:20px 0 6px}
   .card p,.card li{font-size:15px}
-  .card ul{padding-left:20px;margin:8px 0}
-  .pill{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:999px;margin:2px 4px 2px 0}
+  .card ul,.card ol{padding-left:20px;margin:8px 0}
+  .pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin:2px 4px 2px 0}
   .win{background:var(--green-soft);color:var(--green)}
   .warn{background:var(--gold-soft);color:#7a5a1f}
-  .rose{background:var(--rose-soft);color:#8a3f49}
+  .rose{background:var(--rose-soft);color:var(--rose)}
   .full{grid-column:1 / -1}
   table{width:100%;border-collapse:collapse;font-size:14px}
-  th{text-align:left;color:var(--soft);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:8px 6px;border-bottom:1px solid var(--line)}
-  td{padding:10px 6px;border-bottom:1px solid #f0e8d8;vertical-align:top}
+  th{text-align:left;color:var(--soft);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:10px 6px;border-bottom:2px solid var(--navy)}
+  td{padding:11px 6px;border-bottom:1px solid #eef1f2;vertical-align:top}
   .timeline{border-left:3px solid var(--gold);margin:10px 0 4px 6px;padding-left:18px}
   .timeline div{margin:0 0 14px}
-  .timeline b{display:block}
+  .timeline b{display:block;color:var(--navy)}
   .timeline span{color:var(--soft);font-size:14px}
   .note-form{display:grid;gap:10px}
-  select,textarea,button{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--line)}
+  select,textarea,button{font:inherit;padding:11px 12px;border-radius:8px;border:1px solid var(--line)}
   textarea{min-height:110px;resize:vertical}
-  button{background:var(--green);color:#fff;border:0;font-weight:700;cursor:pointer}
-  button:hover{background:#144a3b}
-  .note{border-top:1px solid #f0e8d8;padding:12px 0}
+  button{background:var(--navy);color:#fff;border:0;font-weight:700;cursor:pointer;letter-spacing:.02em}
+  button:hover{background:var(--navy2)}
+  .note{border-top:1px solid #eef1f2;padding:12px 0}
   .note b{color:var(--green)}
   .note small{color:var(--soft);display:block}
   .muted{color:var(--soft);font-size:14px}
-  .footer{margin-top:28px;text-align:center;color:var(--soft);font-size:13px}
+  .footer{margin-top:28px;text-align:center;color:var(--soft);font-size:13px;border-top:1px solid var(--line);padding-top:18px}
   @media (max-width:700px){
     h1{font-size:34px}
     .stats{grid-template-columns:1fr 1fr}
-    .grid{grid-template-columns:1fr}
+    .grid,.exec{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
+<div class="topbar"><div class="topbar-inner"><span>Emily Live <b>|</b> Executive Planner</span><span>@its.emily.live <b>|</b> Private Board</span></div></div>
 <header class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">Emily Live &nbsp;|&nbsp; @its.emily.live</div>
-    <h1>Reel Planner, kept cozy<br>and kept honest.</h1>
-    <p>One shared board for what has posted, what is working, what is not, and what comes next. Emily updates the board. Claude adds strategy in the notes. Boss keeps the final say.</p>
+    <div class="eyebrow">Reel Performance and Forward Plan</div>
+    <h1>Emily Live Reel Planner</h1>
+    <p>One executive board for what has posted, what is working, what is not, and what comes next. Clear numbers, clear decisions, no invented metrics.</p>
   </div>
 </header>
 
 <main class="wrap">
   <div class="gate">
-    <strong>Private board.</strong> This page sits behind the shared planner login. It holds public reel links and strategy only, no private credentials, no payment details, no personal data. If you have the login, you can read it and leave a strategy note below.
+    <strong>Private board.</strong> This page sits behind the shared planner login. It holds public reel links and strategy only, no private credentials, no payment details, no personal data. Emily updates the board. Claude adds strategy in the notes. Boss keeps the final say.
     <br><span class="muted">Updated Oct 29, 2026, Edmonton time. Next review: Sunday analytics, Nov 1 at 18:11.</span>
   </div>
+
+  <section class="exec">
+    <div><small>Winning Lane</small><b>Direct address, cozy at home</b><br><span class="muted">Face first, real motion, 10 seconds, speak only to the viewer.</span></div>
+    <div><small>Post-Fix Clock</small><b>Started Oct 28, 09:44</b><br><span class="muted">Bio line and pins done. That is the clean cut for judging the new mix.</span></div>
+    <div><small>Next Decision</small><b>Nov 20 conversion test</b><br><span class="muted">Primary read: hit rate, share of post-fix reels at 10,000+ views.</span></div>
+  </section>
 
   <section class="stats">
     <div class="stat"><b>153,907</b><span>Viral reel views, Oct 25</span></div>
@@ -87,7 +102,7 @@
     <section class="card">
       <h2>What is working</h2>
       <span class="pill win">Winning family</span>
-      <p>Direct personal address plus cozy at-home intimacy. Speak only to the viewer. Keep it warm, face first, real motion, 10 seconds.</p>
+      <p>Direct personal address plus cozy at-home intimacy. Keep it warm, face first, real motion, 10 seconds.</p>
       <ul>
         <li>Viral reel: 153,907 views, 114,700 reach, 7.17s average watch. <a href="https://www.instagram.com/reel/De7yitpj9xs/">Watch it</a></li>
         <li>Good morning boost: 78,620 views, 62,053 reach, 62.6% average watch. <a href="https://www.instagram.com/reel/DfAC1FeABP7/">Watch it</a></li>
@@ -128,8 +143,8 @@
         <div><b>Fri Oct 30, 19:11, slow evenings</b><span>Batch 7, prep only. Builds and audits first, posts only on a pass, one robe tone.</span></div>
         <div><b>Sat Oct 31, 08:11, Halloween one-off</b><span>Reworked only: costume reveal, hat, cape, or knit, waist-up, no bare-leg focus, no leg-swipe as pitched. If it cannot be built cleanly, drop it. Excluded from the median and the Nov 1 set.</span></div>
         <div><b>Sun Nov 1, 08:11 safer reel, 18:11 analytics, 19:11 view test</b><span>View test is record only, not a decision on its own.</span></div>
-        <div><b>Mon Nov 2, 08:11 winning &nbsp;|&nbsp; Tue Nov 3, 19:11 safer &nbsp;|&nbsp; Wed Nov 4, 08:11 winning</b><span>Daily cadence: 1 reel a day, 7 a week, plus a story at 12:11 daily.</span></div>
-        <div><b>Thu Nov 5, 19:11 safer &nbsp;|&nbsp; Fri Nov 6, 08:11 outfit &nbsp;|&nbsp; Sat Nov 7, 08:11 winning &nbsp;|&nbsp; Sun Nov 8, 08:11 safer</b><span>Fri Nov 6 is the first countdown outfit-list test: one knit, several ways, list format fixed for the first 3 outfit reels.</span></div>
+        <div><b>Mon Nov 2, 08:11 winning | Tue Nov 3, 19:11 safer | Wed Nov 4, 08:11 winning</b><span>Daily cadence: 1 reel a day, 7 a week, plus a story at 12:11 daily.</span></div>
+        <div><b>Thu Nov 5, 19:11 safer | Fri Nov 6, 08:11 outfit | Sat Nov 7, 08:11 winning | Sun Nov 8, 08:11 safer</b><span>Fri Nov 6 is the first countdown outfit-list test: one knit, several ways, list format fixed for the first 3 outfit reels.</span></div>
       </div>
     </section>
 
