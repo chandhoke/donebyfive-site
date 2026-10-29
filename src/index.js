@@ -4,22 +4,19 @@
 // - Private two-assistant chat at /api/chat/*, storing messages in D1.
 // Fix: trigger redeploy via wrangler.toml (restores ASSETS binding)
 
-// - Password-gated Emily planner at /emily-planner/, with a shared
-//   strategy-notes API at /api/planner/notes, storing notes in D1.
-//   Gate: HTTP Basic Auth, username "emily", password checked only by
-//   SHA-256 hash (the password itself is never in this repository).
-//   This keeps casual visitors out. It is a shared-password gate for a
-//   planner that holds no private credentials, not enterprise auth.
+// - Password-gated Emily planner at /emily-planner/.
+//   * Gate: HTTP Basic Auth, username "emily". The password is checked against
+//     env.PLANNER_PASSWORD_HASH, a salted PBKDF2 hash stored as a Worker secret
+//     (never in this repository). If the secret is missing the planner stays
+//     locked for everyone.
+//   * Board content (schedule, posted reels, pipeline, checkpoints, notes from
+//     Claude) is read after login from a private Notion database through
+//     /api/planner/state, using env.NOTION_TOKEN and env.NOTION_DATABASE_ID
+//     (Worker secrets). No board content lives in this public repository.
+//   * Shared strategy notes from Emily and Boss are stored in D1 through
+//     /api/planner/notes.
 const PLANNER_USER = "emily";
-const PLANNER_PASSWORD_HASH =
-  "e714ee622b5881114f8f43d69246e20a81c5a514ba9c00f130c3e9cac314132c";
-// Claude-only direct-access token, stored only as a hash. This token is
-// separate from the shared planner password, so it can be revoked on its
-// own by removing its hash here, without changing the password for Boss
-// and Emily. The token itself is never in this repository.
-// REVOKED Oct 29, 2026, on Boss approval, after Claude refused the token
-// link in Message 28 and urged revocation. No token hash remains here.
-const PLANNER_TOKEN_HASHES = [];
+const NOTION_VERSION = "2022-06-28";
 
 export default {
   async fetch(request, env) {
@@ -43,8 +40,11 @@ export default {
     }
 
     if (url.pathname.startsWith("/api/planner/")) {
-      if (!(await plannerAuthorized(request, url))) {
+      if (!(await plannerAuthorized(request, env))) {
         return plannerUnauthorized();
+      }
+      if (url.pathname === "/api/planner/state" && request.method === "GET") {
+        return handlePlannerState(env);
       }
       return handlePlanner(request, env, url);
     }
@@ -53,9 +53,18 @@ export default {
       url.pathname === "/emily-planner" ||
       url.pathname.startsWith("/emily-planner/")
     ) {
-      if (!(await plannerAuthorized(request, url))) {
+      if (!(await plannerAuthorized(request, env))) {
         return plannerUnauthorized();
       }
+      const res = await env.ASSETS.fetch(request);
+      const headers = new Headers(res.headers);
+      headers.set("cache-control", "no-store");
+      headers.set("x-robots-tag", "noindex, nofollow");
+      return new Response(res.body, {
+        status: res.status,
+        statusText: res.statusText,
+        headers,
+      });
     }
 
     // Everything else: serve the static site.
@@ -63,27 +72,57 @@ export default {
   },
 };
 
-async function sha256Hex(text) {
-  const digest = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(text)
-  );
-  return [...new Uint8Array(digest)]
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+function hexToBytes(hex) {
+  if (!/^([0-9a-f]{2})+$/i.test(hex)) return null;
+  const out = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < out.length; i++) {
+    out[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+  }
+  return out;
 }
 
-async function plannerAuthorized(request, url) {
-  // Direct-access token route, for Claude: a token in the URL query or
-  // in the X-Planner-Token header, checked only by hash. No password
-  // typing is involved on this route.
-  const token =
-    (url && url.searchParams.get("token")) ||
-    request.headers.get("X-Planner-Token") ||
-    "";
-  if (token && PLANNER_TOKEN_HASHES.includes(await sha256Hex(token))) {
-    return true;
+function bytesToHex(bytes) {
+  return [...bytes].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Constant-time string comparison for equal-purpose hex strings.
+function timingSafeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+// Stored format: pbkdf2$<iterations>$<saltHex>$<hashHex> (SHA-256, 32 bytes).
+// Generate one locally with scripts/hash-planner-password.mjs.
+async function verifyPlannerPassword(password, stored) {
+  const parts = String(stored || "").split("$");
+  if (parts.length !== 4 || parts[0] !== "pbkdf2") return false;
+  const iterations = parseInt(parts[1], 10);
+  // Workers' WebCrypto caps PBKDF2 at 100000 iterations.
+  if (!Number.isInteger(iterations) || iterations < 1000 || iterations > 100000) {
+    return false;
   }
+  const salt = hexToBytes(parts[2]);
+  if (!salt || !/^[0-9a-f]{64}$/i.test(parts[3])) return false;
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(password),
+    "PBKDF2",
+    false,
+    ["deriveBits"]
+  );
+  const bits = await crypto.subtle.deriveBits(
+    { name: "PBKDF2", hash: "SHA-256", salt, iterations },
+    key,
+    256
+  );
+  return timingSafeEqual(bytesToHex(new Uint8Array(bits)), parts[3].toLowerCase());
+}
+
+async function plannerAuthorized(request, env) {
+  // Fail closed: no secret configured means nobody gets in.
+  if (!env.PLANNER_PASSWORD_HASH) return false;
   const header = request.headers.get("Authorization") || "";
   if (!header.startsWith("Basic ")) return false;
   let decoded = "";
@@ -96,8 +135,8 @@ async function plannerAuthorized(request, url) {
   if (colon < 0) return false;
   const user = decoded.slice(0, colon);
   const password = decoded.slice(colon + 1);
-  if (user !== PLANNER_USER) return false;
-  return (await sha256Hex(password)) === PLANNER_PASSWORD_HASH;
+  const passwordOk = await verifyPlannerPassword(password, env.PLANNER_PASSWORD_HASH);
+  return passwordOk && user === PLANNER_USER;
 }
 
 function plannerUnauthorized() {
@@ -108,6 +147,80 @@ function plannerUnauthorized() {
       "cache-control": "no-store",
     },
   });
+}
+
+// Reads the private Notion database that holds the board content.
+// Expected properties: Title (title), Section (select), When (text),
+// Detail (text), Order (number), Status (select), Author (select), Link (url).
+function notionText(prop) {
+  if (!prop) return "";
+  const parts = prop.title || prop.rich_text;
+  if (Array.isArray(parts)) return parts.map((t) => t.plain_text || "").join("");
+  return "";
+}
+
+function mapNotionPage(page) {
+  const p = page.properties || {};
+  const section = p.Section && p.Section.select ? p.Section.select.name : "";
+  if (!section) return null;
+  return {
+    id: page.id,
+    section,
+    title: notionText(p.Title),
+    when: notionText(p.When),
+    detail: notionText(p.Detail),
+    order: p.Order && typeof p.Order.number === "number" ? p.Order.number : null,
+    status: p.Status && p.Status.select ? p.Status.select.name : "",
+    author: p.Author && p.Author.select ? p.Author.select.name : "",
+    link: p.Link && p.Link.url ? p.Link.url : "",
+    created: page.created_time || "",
+  };
+}
+
+let plannerStateCache = { at: 0, rows: null };
+
+async function handlePlannerState(env) {
+  if (!env.NOTION_TOKEN || !env.NOTION_DATABASE_ID) {
+    return json({ ok: false, error: "Board content is not connected yet." }, 503);
+  }
+  const now = Date.now();
+  if (plannerStateCache.rows && now - plannerStateCache.at < 20000) {
+    return json({ ok: true, rows: plannerStateCache.rows });
+  }
+  const rows = [];
+  let cursor;
+  try {
+    for (let i = 0; i < 5; i++) {
+      const res = await fetch(
+        "https://api.notion.com/v1/databases/" +
+          encodeURIComponent(env.NOTION_DATABASE_ID) +
+          "/query",
+        {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + env.NOTION_TOKEN,
+            "Notion-Version": NOTION_VERSION,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(cursor ? { page_size: 100, start_cursor: cursor } : { page_size: 100 }),
+        }
+      );
+      if (!res.ok) {
+        return json({ ok: false, error: "Board source returned " + res.status + "." }, 502);
+      }
+      const data = await res.json();
+      for (const page of data.results || []) {
+        const row = mapNotionPage(page);
+        if (row && row.status !== "Archived") rows.push(row);
+      }
+      if (!data.has_more) break;
+      cursor = data.next_cursor;
+    }
+  } catch {
+    return json({ ok: false, error: "Board source could not be reached." }, 502);
+  }
+  plannerStateCache = { at: now, rows };
+  return json({ ok: true, rows });
 }
 
 async function handlePlanner(request, env, url) {
