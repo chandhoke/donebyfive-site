@@ -37,6 +37,27 @@ npx wrangler d1 execute donebyfive-subscribers --remote --json \
   --command "SELECT email, created_at FROM subscribers" > subscribers.json
 ```
 
+## Emily planner (private board)
+
+`/emily-planner/` is behind HTTP Basic Auth. The page in `public/emily-planner/`
+is an empty shell: **no board content is stored in this public repository.**
+After login the page loads its content from `/api/planner/state`, which reads a
+private Notion database, and shared notes from `/api/planner/notes` (D1).
+
+Worker secrets (set in the Cloudflare dashboard or with `npx wrangler secret put`,
+never committed):
+
+| Secret | What it is |
+|---|---|
+| `PLANNER_PASSWORD_HASH` | PBKDF2 hash of the shared login. Generate it with `node scripts/hash-planner-password.mjs` (password read from stdin). If unset, the planner stays locked. |
+| `NOTION_TOKEN` | Internal Notion integration token, with access to the board database only. |
+| `NOTION_DATABASE_ID` | ID of the board database. |
+
+Notion database properties: `Title` (title), `Section` (select: Banner, Summary,
+Stat, Working, Not working, Posted, Upcoming, Pipeline, Checkpoint, Note),
+`When` (text), `Detail` (text), `Order` (number), `Status` (select: Active, Done,
+Archived), `Author` (select: Emily, Claude, Boss), `Link` (url).
+
 ## Local development
 
 ```bash
