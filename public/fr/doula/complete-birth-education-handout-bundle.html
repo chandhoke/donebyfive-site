@@ -45,6 +45,8 @@
   .pill{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--moss);background:var(--moss-pale);border:1px solid #C8D8CB;border-radius:100px;padding:4px 12px;}
   .cta{display:inline-block;background:var(--moss);color:#fff;font-weight:500;font-size:15px;padding:13px 26px;border-radius:6px;text-decoration:none;transition:background .15s;}
   .cta:hover{background:var(--moss-mid);}
+  .cta-off{background:var(--stone-3);color:var(--ink-soft,#5a5a5a);cursor:default;}
+  .cta-off:hover{background:var(--stone-3);}
   .lede{font-size:18px;color:var(--ink-60);margin:8px 0 28px;}
   h2{font-family:var(--f-serif);font-size:27px;font-weight:400;margin:40px 0 12px;}
   p{font-size:16px;color:var(--ink-60);margin-bottom:16px;}
@@ -84,7 +86,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
       {"@type":"ListItem","position":2,"name":"Doula et naissance","item":"https://donebyfive.com/fr/doula/"},
       {"@type":"ListItem","position":3,"name":"Ensemble complet de fiches de préparation à la naissance","item":"https://donebyfive.com/fr/doula/complete-birth-education-handout-bundle"}
     ]},
-    {"@type":"Product","name":"Ensemble complet de fiches de préparation à la naissance","description":"Une bibliothèque d'information bilingue (EN/FR) pour les doulas et les travailleuses et travailleurs de la naissance : dix fiches et listes de vérification en langage clair sur la préparation à la naissance, en un seul téléchargement — phases du travail, rôle de la doula, mesures de confort, positions de travail, guide du ou de la partenaire, rétablissement post-partum, notions de base sur le nouveau-né, et listes de vérification pour la naissance à l'hôpital ou à la maison.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Téléchargement numérique","image":"https://donebyfive.com/og-doula.png","offers":{"@type":"Offer","price":"29.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive","seller":{"@type":"Organization","name":"DoneByFive"}}},
+    {"@type":"Product","name":"Ensemble complet de fiches de préparation à la naissance","description":"Une bibliothèque d'information bilingue (EN/FR) pour les doulas et les travailleuses et travailleurs de la naissance : dix fiches et listes de vérification en langage clair sur la préparation à la naissance, en un seul téléchargement — phases du travail, rôle de la doula, mesures de confort, positions de travail, guide du ou de la partenaire, rétablissement post-partum, notions de base sur le nouveau-né, et listes de vérification pour la naissance à l'hôpital ou à la maison.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Téléchargement numérique","image":"https://donebyfive.com/og-doula.png","offers":{"@type":"Offer","price":"29.00","priceCurrency":"CAD","availability":"https://schema.org/OutOfStock","url":"https://www.etsy.com/shop/DoneByFive","seller":{"@type":"Organization","name":"DoneByFive"}}},
     {"@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"Est-ce un PDF imprimable ou un fichier modifiable?","acceptedAnswer":{"@type":"Answer","text":"C'est un PDF prêt à imprimer. Imprimez à la maison, chez un imprimeur, ou partagez le fichier en format numérique avec votre clientèle — aucun logiciel à apprendre et rien à assembler."}},
       {"@type":"Question","name":"Est-ce vraiment bilingue (anglais et français)?","acceptedAnswer":{"@type":"Answer","text":"Oui. Chaque fiche est offerte en anglais et en français, ce qui vous permet de remettre à votre clientèle la langue de son choix, ou les deux."}},
@@ -107,10 +109,11 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
   <h1>Ensemble complet de fiches de préparation à la naissance</h1>
   <div class="meta">
     <span class="price">29 $ CA</span>
+    <span class="pill">Rupture de stock</span>
     <span class="pill">PDF imprimable</span>
     <span class="pill">Bilingue EN / FR</span>
   </div>
-  <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Acheter sur Etsy →</a>
+  <span class="cta cta-off" aria-disabled="true">Non disponible pour le moment</span>
 
   <p class="lede">Toute la bibliothèque d'information qu'une doula remet à sa clientèle avant le travail — dix guides et listes de vérification en langage clair, bilingues (EN/FR), en un seul téléchargement.</p>
 
@@ -153,7 +156,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 
   <div class="cta-row">
     <p><strong>Bâtissez votre bibliothèque de fiches en un seul téléchargement.</strong> Téléchargement instantané, 29 $ CA.</p>
-    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Acheter sur Etsy →</a>
+    <span class="cta cta-off" aria-disabled="true">Non disponible pour le moment</span>
   </div>
 
   <h2>Trousses connexes</h2>

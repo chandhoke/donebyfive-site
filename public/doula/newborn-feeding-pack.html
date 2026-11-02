@@ -43,6 +43,8 @@
   .pill{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--moss);background:var(--moss-pale);border:1px solid #C8D8CB;border-radius:100px;padding:4px 12px;}
   .cta{display:inline-block;background:var(--moss);color:#fff;font-weight:500;font-size:15px;padding:13px 26px;border-radius:6px;text-decoration:none;transition:background .15s;}
   .cta:hover{background:var(--moss-mid);}
+  .cta-off{background:var(--stone-3);color:var(--ink-soft,#5a5a5a);cursor:default;}
+  .cta-off:hover{background:var(--stone-3);}
   .lede{font-size:18px;color:var(--ink-60);margin:8px 0 28px;}
   h2{font-family:var(--f-serif);font-size:27px;font-weight:400;margin:40px 0 12px;}
   p{font-size:16px;color:var(--ink-60);margin-bottom:16px;}
@@ -82,7 +84,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
       {"@type":"ListItem","position":2,"name":"Doula & Birth","item":"https://donebyfive.com/doula/"},
       {"@type":"ListItem","position":3,"name":"Newborn Feeding Pack","item":"https://donebyfive.com/doula/newborn-feeding-pack"}
     ]},
-    {"@type":"Product","name":"Newborn Feeding Pack","description":"Five bilingual (EN/FR) feeding guides for every feeding journey: breastfeeding/chestfeeding basics, cluster feeding & growth spurts, pumping & milk storage, bottle & combo feeding, and engorgement & mastitis comfort.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Digital download","image":"https://donebyfive.com/og-doula.png","offers":{"@type":"Offer","price":"15.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive","seller":{"@type":"Organization","name":"DoneByFive"}}},
+    {"@type":"Product","name":"Newborn Feeding Pack","description":"Five bilingual (EN/FR) feeding guides for every feeding journey: breastfeeding/chestfeeding basics, cluster feeding & growth spurts, pumping & milk storage, bottle & combo feeding, and engorgement & mastitis comfort.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Digital download","image":"https://donebyfive.com/og-doula.png","offers":{"@type":"Offer","price":"15.00","priceCurrency":"CAD","availability":"https://schema.org/OutOfStock","url":"https://www.etsy.com/shop/DoneByFive","seller":{"@type":"Organization","name":"DoneByFive"}}},
     {"@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"Does it cover bottle feeding too, or only breastfeeding?","acceptedAnswer":{"@type":"Answer","text":"Both. The pack covers breastfeeding/chestfeeding, pumping and storage, and bottle/combo feeding — it's built to support any feeding choice without judgement."}},
       {"@type":"Question","name":"Is it really bilingual (English and French)?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every guide is provided in both English and French, so you can use whichever you prefer."}},
@@ -105,10 +107,11 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
   <h1>Newborn Feeding Pack</h1>
   <div class="meta">
     <span class="price">CAD $15</span>
+    <span class="pill">Out of stock</span>
     <span class="pill">Printable PDF</span>
     <span class="pill">Bilingual EN / FR</span>
   </div>
-  <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Buy on Etsy →</a>
+  <span class="cta cta-off" aria-disabled="true">Currently out of stock</span>
 
   <p class="lede">Five plain-language guides for every feeding journey — breast, bottle, pump, or a mix — bilingual EN/FR and ready to print.</p>
 
@@ -146,7 +149,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 
   <div class="cta-row">
     <p><strong>Calm, judgement-free feeding help.</strong> Instant download, CAD $15.</p>
-    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Buy on Etsy →</a>
+    <span class="cta cta-off" aria-disabled="true">Currently out of stock</span>
   </div>
 
   <h2>Related toolkits</h2>

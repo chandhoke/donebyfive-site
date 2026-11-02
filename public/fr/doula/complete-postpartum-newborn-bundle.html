@@ -45,6 +45,8 @@
   .pill{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--moss);background:var(--moss-pale);border:1px solid #C8D8CB;border-radius:100px;padding:4px 12px;}
   .cta{display:inline-block;background:var(--moss);color:#fff;font-weight:500;font-size:15px;padding:13px 26px;border-radius:6px;text-decoration:none;transition:background .15s;}
   .cta:hover{background:var(--moss-mid);}
+  .cta-off{background:var(--stone-3);color:var(--ink-soft,#5a5a5a);cursor:default;}
+  .cta-off:hover{background:var(--stone-3);}
   .lede{font-size:18px;color:var(--ink-60);margin:8px 0 28px;}
   h2{font-family:var(--f-serif);font-size:27px;font-weight:400;margin:40px 0 12px;}
   p{font-size:16px;color:var(--ink-60);margin-bottom:16px;}
@@ -84,7 +86,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
       {"@type":"ListItem","position":2,"name":"Doula et naissance","item":"https://donebyfive.com/fr/doula/"},
       {"@type":"ListItem","position":3,"name":"Ensemble complet post-partum et nouveau-né","item":"https://donebyfive.com/fr/doula/complete-postpartum-newborn-bundle"}
     ]},
-    {"@type":"Product","name":"Ensemble complet post-partum et nouveau-né","description":"Toute la bibliothèque du quatrième trimestre en un seul téléchargement bilingue (EN/FR) : plus de 30 fiches et journaux portant sur le rétablissement post-partum, l'alimentation du nouveau-né, les soins du nouveau-né, le bien-être post-partum et des feuilles de suivi quotidien pour l'alimentation, les couches, le sommeil et le tire-lait.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Téléchargement numérique","image":"https://donebyfive.com/og-doula.png","offers":{"@type":"Offer","price":"39.00","priceCurrency":"CAD","availability":"https://schema.org/InStock","url":"https://www.etsy.com/shop/DoneByFive","seller":{"@type":"Organization","name":"DoneByFive"}}},
+    {"@type":"Product","name":"Ensemble complet post-partum et nouveau-né","description":"Toute la bibliothèque du quatrième trimestre en un seul téléchargement bilingue (EN/FR) : plus de 30 fiches et journaux portant sur le rétablissement post-partum, l'alimentation du nouveau-né, les soins du nouveau-né, le bien-être post-partum et des feuilles de suivi quotidien pour l'alimentation, les couches, le sommeil et le tire-lait.","brand":{"@type":"Organization","name":"DoneByFive"},"category":"Téléchargement numérique","image":"https://donebyfive.com/og-doula.png","offers":{"@type":"Offer","price":"39.00","priceCurrency":"CAD","availability":"https://schema.org/OutOfStock","url":"https://www.etsy.com/shop/DoneByFive","seller":{"@type":"Organization","name":"DoneByFive"}}},
     {"@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"Quelle est la différence entre cet ensemble et les trousses plus petites?","acceptedAnswer":{"@type":"Answer","text":"Cet ensemble réunit toutes les trousses individuelles post-partum et nouveau-né — rétablissement, alimentation, soins du nouveau-né, bien-être et les journaux de suivi — en un seul téléchargement à prix réduit. Si vous voulez toute la bibliothèque du quatrième trimestre, c'est le meilleur rapport qualité-prix."}},
       {"@type":"Question","name":"Est-ce vraiment bilingue (anglais et français)?","acceptedAnswer":{"@type":"Answer","text":"Oui. Chaque fiche et chaque journal sont offerts en anglais et en français, ce qui vous permet d'utiliser la langue de votre choix."}},
@@ -107,10 +109,11 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
   <h1>Ensemble complet post-partum et nouveau-né</h1>
   <div class="meta">
     <span class="price">39 $ CA</span>
+    <span class="pill">Rupture de stock</span>
     <span class="pill">PDF imprimable</span>
     <span class="pill">Bilingue EN / FR</span>
   </div>
-  <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Acheter sur Etsy →</a>
+  <span class="cta cta-off" aria-disabled="true">Non disponible pour le moment</span>
 
   <p class="lede">Toute la bibliothèque du quatrième trimestre en un seul téléchargement — plus de 30 fiches et journaux bilingues (EN/FR) couvrant le rétablissement, l'alimentation, les soins du nouveau-né, le bien-être et le suivi.</p>
 
@@ -148,7 +151,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;gap:1
 
   <div class="cta-row">
     <p><strong>Tout le quatrième trimestre, en un seul téléchargement.</strong> Téléchargement instantané, 39 $ CA.</p>
-    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer" class="cta">Acheter sur Etsy →</a>
+    <span class="cta cta-off" aria-disabled="true">Non disponible pour le moment</span>
   </div>
 
   <h2>Trousses connexes</h2>
