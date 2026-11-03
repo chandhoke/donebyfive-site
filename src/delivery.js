@@ -114,7 +114,7 @@ export async function ensureDeliveryTables(env) {
   ).run();
 }
 
-async function sendDownloadEmail(env, buyerEmail, fileName, token, buyerName) {
+export async function sendDownloadEmail(env, buyerEmail, fileName, token, buyerName, locale) {
   if (!env.EMAIL_API_KEY || !buyerEmail) return false;
   try {
     const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -122,36 +122,61 @@ async function sendDownloadEmail(env, buyerEmail, fileName, token, buyerName) {
     // Personalized, extension-free display: greeting uses the buyer's first
     // name from Stripe when present, and the product name is shown without
     // its .xlsx / .zip extension, in the subject and in the body alike.
+    // French version: sent when the Stripe Checkout Session locale starts
+    // with "fr" (fr, fr-CA, and so on). Anything else, including "auto"
+    // and a missing locale, gets the English version. The file itself is
+    // bilingual EN/FR either way.
+    const isFrench = String(locale || "").toLowerCase().startsWith("fr");
     const firstName = String(buyerName || "").trim().split(/\s+/)[0] || "";
-    const greeting = firstName ? `Hi ${firstName},` : "Hi there,";
     const productName = String(fileName).replace(/\.(xlsx|zip)$/i, "");
+    const copy = isFrench ? {
+      subject: "Votre téléchargement DoneByFive est prêt",
+      tagline: "Le plus difficile, c'est fait. Par cinq.",
+      greeting: firstName ? `Bonjour ${firstName},` : "Bonjour,",
+      ready: "Merci pour votre commande. Votre fichier est prêt à télécharger.",
+      fileLabel: "Votre fichier",
+      fileMeta: "Excel / Google Sheets · Bilingue EN/FR",
+      button: "Télécharger votre fichier",
+      howTo: "Enregistrez le fichier sur votre appareil, puis ouvrez-le dans Excel ou Google Sheets. Aucune macro, aucun module complémentaire, aucun abonnement.",
+      terms: "Votre lien de téléchargement fonctionne pendant 7 jours, jusqu'à 3 téléchargements. Si le lien expire, répondez à cet courriel et nous vous aiderons.",
+      footerNote: "Téléchargement numérique bilingue EN/FR, créé en Alberta. Achat unique, sans abonnement.",
+    } : {
+      subject: "Your DoneByFive download is ready",
+      tagline: "The hard part, done. By five.",
+      greeting: firstName ? `Hi ${firstName},` : "Hi there,",
+      ready: "Thanks for your order. Your file is ready to download.",
+      fileLabel: "Your file",
+      fileMeta: "Excel / Google Sheets · Bilingual EN/FR",
+      button: "Download your file",
+      howTo: "Save the file to your own device once it downloads, then open it in Excel or Google Sheets. No macros, no add-ins, no subscription.",
+      terms: "Your download link works for 7 days, up to 3 downloads. If the link expires, reply to this email and we will help.",
+      footerNote: "Bilingual EN/FR digital download, built in Alberta. Buy once, no subscription.",
+    };
     const text =
-      `DoneByFive\nThe hard part, done. By five.\n\n` +
-      `${greeting}\n\nThanks for your order. Your file is ready.\n\n` +
-      `${productName}\nDownload your file: ${url}\n\n` +
-      `How to use it: save the file to your own device, then open it in Excel or Google Sheets. No macros, no add-ins, no subscription.\n\n` +
-      `Your download link works for 7 days, up to 3 downloads. If the link expires, reply to this email and we will help.\n\n` +
-      `Bilingual EN/FR digital download, built in Alberta. Buy once, no subscription.\n` +
+      `DoneByFive\n${copy.tagline}\n\n` +
+      `${copy.greeting}\n\n${copy.ready}\n\n` +
+      `${productName}\n${copy.button}: ${url}\n\n` +
+      `${copy.howTo}\n\n${copy.terms}\n\n${copy.footerNote}\n` +
       `donebyfive.com`;
     const html =
       `<div style="font-family:Arial,Helvetica,sans-serif;color:#1b1b1b;background:#f4f4f2;padding:24px 12px;">` +
       `<div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e2e2de;">` +
       `<div style="padding:28px 32px 20px;border-bottom:4px solid #1b1b1b;">` +
       `<div style="font-size:26px;font-weight:bold;letter-spacing:-0.5px;">DoneByFive</div>` +
-      `<div style="font-size:14px;color:#666666;margin-top:4px;">The hard part, done. By five.</div>` +
+      `<div style="font-size:14px;color:#666666;margin-top:4px;">${esc(copy.tagline)}</div>` +
       `</div>` +
       `<div style="padding:28px 32px;">` +
-      `<h1 style="font-size:22px;margin:0 0 8px;">${esc(greeting)}</h1>` +
-      `<p style="font-size:16px;line-height:24px;margin:0 0 20px;">Thanks for your order. Your file is ready to download.</p>` +
+      `<h1 style="font-size:22px;margin:0 0 8px;">${esc(copy.greeting)}</h1>` +
+      `<p style="font-size:16px;line-height:24px;margin:0 0 20px;">${esc(copy.ready)}</p>` +
       `<div style="border:1px solid #e2e2de;padding:18px 20px;margin-bottom:24px;">` +
-      `<div style="font-size:12px;color:#666666;text-transform:uppercase;letter-spacing:1px;">Your file</div>` +
+      `<div style="font-size:12px;color:#666666;text-transform:uppercase;letter-spacing:1px;">${esc(copy.fileLabel)}</div>` +
       `<div style="font-size:17px;font-weight:bold;margin-top:6px;">${esc(productName)}</div>` +
-      `<div style="font-size:14px;color:#666666;margin-top:4px;">Excel / Google Sheets &middot; Bilingual EN/FR</div>` +
+      `<div style="font-size:14px;color:#666666;margin-top:4px;">${esc(copy.fileMeta)}</div>` +
       `</div>` +
-      `<a href="${url}" style="display:inline-block;background:#1b1b1b;color:#ffffff;font-size:16px;font-weight:bold;text-decoration:none;padding:14px 28px;">Download your file</a>` +
-      `<p style="font-size:14px;line-height:22px;color:#444444;margin:24px 0 0;">Save the file to your own device once it downloads, then open it in Excel or Google Sheets. No macros, no add-ins, no subscription.</p>` +
-      `<p style="font-size:14px;line-height:22px;color:#444444;">Your download link works for 7 days, up to 3 downloads. If the link expires, reply to this email and we will help.</p>` +
-      `<p style="font-size:14px;line-height:22px;color:#666666;border-top:1px solid #e2e2de;padding-top:16px;margin-top:24px;">Votre fichier est pr&ecirc;t &agrave; t&eacute;l&eacute;charger.<br>Bilingual EN/FR digital download, built in Alberta. Buy once, no subscription.</p>` +
+      `<a href="${url}" style="display:inline-block;background:#1b1b1b;color:#ffffff;font-size:16px;font-weight:bold;text-decoration:none;padding:14px 28px;">${esc(copy.button)}</a>` +
+      `<p style="font-size:14px;line-height:22px;color:#444444;margin:24px 0 0;">${esc(copy.howTo)}</p>` +
+      `<p style="font-size:14px;line-height:22px;color:#444444;">${esc(copy.terms)}</p>` +
+      `<p style="font-size:14px;line-height:22px;color:#666666;border-top:1px solid #e2e2de;padding-top:16px;margin-top:24px;">${esc(copy.footerNote)}</p>` +
       `</div>` +
       `<div style="padding:16px 32px;background:#f4f4f2;font-size:13px;color:#666666;">donebyfive.com &middot; Alberta, Canada</div>` +
       `</div></div>`;
@@ -164,7 +189,7 @@ async function sendDownloadEmail(env, buyerEmail, fileName, token, buyerName) {
       body: JSON.stringify({
         from: "DoneByFive <orders@donebyfive.com>",
         to: [buyerEmail],
-        subject: "Your DoneByFive download is ready",
+        subject: copy.subject,
         text,
         html,
       }),
@@ -265,7 +290,7 @@ export async function handleStripeWebhook(request, env) {
     // is configured. No file attachment, no public file folder.
     // Without EMAIL_API_KEY this is a no-op and the thank-you page
     // remains the buyer path.
-    if (!existingOrder) await sendDownloadEmail(env, buyerEmail, fileName, token, buyerName);
+    if (!existingOrder) await sendDownloadEmail(env, buyerEmail, fileName, token, buyerName, obj.locale);
   }
   return json({ ok: true, order_id: orderId, file_name: fileName });
 }
@@ -378,7 +403,7 @@ export async function handleDeliveryLookup(request, env) {
     tokenRow = await env.DB.prepare("SELECT * FROM delivery_tokens WHERE order_id = ? ORDER BY created_at DESC LIMIT 1").bind(sessionId).first();
     // Lookup-created order: email once here too, so a buyer still gets
     // mail even if the webhook missed. No-op without EMAIL_API_KEY.
-    if (session) await sendDownloadEmail(env, order.buyer_email, order.file_name, token, session.customer_details?.name || null);
+    if (session) await sendDownloadEmail(env, order.buyer_email, order.file_name, token, session.customer_details?.name || null, session.locale);
   }
   return json({ ok: true, file_name: order.file_name, download_url: `/download/${tokenRow.token}` });
 }
