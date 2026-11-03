@@ -29,6 +29,20 @@ export const PRODUCT_FILES = {
   "price_1UXiI8Q1kgMeTTuRtKKfcAw9": "Landlord Starter Bundle.zip",
 };
 
+export const PAYMENT_LINK_FILES = {
+  "plink_1UXjJgQ8u6FiPZ7Wnf9CP8cT": "Grocery Category Sales Tracker.xlsx",
+  "plink_1UXiJIQ1kgMeTTuReXCSeMUx": "Grocery Category Sales Tracker.xlsx",
+  "plink_1UXiJKQ1kgMeTTuR6Q1UwPfr": "Reorder Point and Par Level Calculator.xlsx",
+  "plink_1UXiJLQ1kgMeTTuRCVcNOpr2": "Device Repair Job Ticket Tracker.xlsx",
+  "plink_1UXiJMQ1kgMeTTuRTYNxvoXa": "Parts Inventory Reorder Tracker.xlsx",
+  "plink_1UXiJNQ1kgMeTTuRB3TW5BsH": "Repair Shop Cash Book Daily Sales Log.xlsx",
+  "plink_1UXiJOQ1kgMeTTuR6otdy6VA": "Rental Property Income and Expense Ledger.xlsx",
+  "plink_1UXiJQQ1kgMeTTuRbyo3rbBV": "Multi-Unit Property Dashboard.xlsx",
+  "plink_1UXiJRQ1kgMeTTuRQbjQptYm": "Retail Starter Bundle.zip",
+  "plink_1UXiJSQ1kgMeTTuRWtjrOd2i": "Repair Shop Starter Bundle.zip",
+  "plink_1UXiJTQ1kgMeTTuR0kZmQZgM": "Landlord Starter Bundle.zip",
+};
+
 const TOKEN_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
 const TOKEN_MAX_DOWNLOADS = 3;
 
@@ -106,8 +120,27 @@ export async function handleStripeWebhook(request, env) {
     return json({ ok: true, ignored: true });
   }
   const obj = event.data?.object || {};
-  const priceId = obj?.line_items?.data?.[0]?.price?.id || obj?.metadata?.price_id || "";
-  const fileName = PRODUCT_FILES[priceId];
+  // Checkout Session webhook objects do NOT include line_items by default,
+  // so price alone cannot be trusted here. Try, in order: expanded line
+  // items, metadata, payment_link mapping, then a Stripe API line-items
+  // fetch using the test secret key already set in the Worker.
+  let priceId = obj?.line_items?.data?.[0]?.price?.id || obj?.metadata?.price_id || "";
+  let fileName = priceId ? PRODUCT_FILES[priceId] : null;
+  if (!fileName && obj?.payment_link) {
+    fileName = PAYMENT_LINK_FILES[obj.payment_link];
+  }
+  if (!fileName && env.STRIPE_SECRET_KEY && obj?.id && event.type === "checkout.session.completed") {
+    try {
+      const res = await fetch(`https://api.stripe.com/v1/checkout/sessions/${obj.id}/line_items?limit=1`, {
+        headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        priceId = data?.data?.[0]?.price?.id || priceId;
+        fileName = priceId ? PRODUCT_FILES[priceId] : null;
+      }
+    } catch { /* fall through to unknown price below */ }
+  }
   if (!fileName) return json({ ok: true, ignored: true, reason: "Unknown price." });
 
   await ensureDeliveryTables(env);
@@ -120,6 +153,13 @@ export async function handleStripeWebhook(request, env) {
     obj.customer_details?.email || obj.receipt_email || null,
     obj.amount_total ?? obj.amount ?? null, obj.currency || "cad",
     Math.floor(Date.now() / 1000)).run();
+  if (env.DOWNLOAD_TOKEN_SECRET) {
+    const expiry = Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS;
+    const token = await makeDownloadToken(env.DOWNLOAD_TOKEN_SECRET, orderId, expiry);
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO delivery_tokens (token, order_id, downloads, expires_at, created_at) VALUES (?, ?, 0, ?, ?)"
+    ).bind(token, orderId, expiry, Math.floor(Date.now() / 1000)).run();
+  }
   // Email delivery is a separate step on merge: send the token link with
   // the configured email provider, using env.EMAIL_API_KEY. Do not send
   // the file as an attachment, and do not put the file in a public folder.
