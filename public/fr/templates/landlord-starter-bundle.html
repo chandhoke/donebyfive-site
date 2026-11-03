@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ensemble de démarrage pour propriétaire — Excel &amp; Google Sheets | DoneByFive</title>
+<meta name="description" content="Huit classeurs pour propriétaire en un seul téléchargement, couvrant les tâches quotidiennes de gestion locative : revenus et dépenses, paiements des locataires, états des lieux, entretien, baux, dépôts, vues multi-logements et préparation fiscale.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://donebyfive.com/fr/templates/landlord-starter-bundle">
+<link rel="alternate" hreflang="en-ca" href="https://donebyfive.com/templates/landlord-starter-bundle">
+<link rel="alternate" hreflang="fr-ca" href="https://donebyfive.com/fr/templates/landlord-starter-bundle">
+<link rel="alternate" hreflang="x-default" href="https://donebyfive.com/templates/landlord-starter-bundle">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="DoneByFive">
+<meta property="og:url" content="https://donebyfive.com/fr/templates/landlord-starter-bundle">
+<meta property="og:title" content="Ensemble de démarrage pour propriétaire — Excel &amp; Google Sheets">
+<meta property="og:description" content="Huit classeurs pour propriétaire en un seul téléchargement, couvrant les tâches quotidiennes de gestion locative : revenus et dépenses, paiements des locataires, états des lieux, entretien, baux, dépôts, vues multi-logements et préparation fiscale.">
+<meta property="og:image" content="https://donebyfive.com/og-landlord.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://donebyfive.com/og-landlord.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#111110;--ink-60:#444440;--stone:#F7F6F2;--stone-3:#E4E2DC;--stone-5:#9E9B94;--moss:#2D4A35;--moss-mid:#3D6347;--moss-lite:#5A8A68;--moss-pale:#E8F0EA;--white:#fff;--f-serif:'Instrument Serif',Georgia,serif;--f-sans:'Geist',system-ui,sans-serif;--f-mono:'Geist Mono','Courier New',monospace;}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--stone);font-family:var(--f-sans);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  header{border-bottom:1px solid var(--stone-3);padding:20px 0;margin-bottom:32px;}
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+  .disc{width:28px;height:28px;border-radius:50%;background:var(--moss);display:flex;align-items:center;justify-content:center;font-family:var(--f-serif);font-style:italic;font-size:15px;color:var(--stone);}
+  .brand-name{font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);}
+  main{padding-bottom:80px;}
+  .crumb{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;color:var(--stone-5);margin-bottom:24px;}
+  .crumb a{color:var(--stone-5);text-decoration:none;}
+  .crumb a:hover{color:var(--ink);}
+  .cat{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--moss-lite);margin-bottom:8px;}
+  h1{font-family:var(--f-serif);font-size:46px;font-weight:400;line-height:1.05;margin-bottom:14px;}
+  .meta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:24px;}
+  .price{font-weight:600;font-size:22px;}
+  .pill{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--moss);background:var(--moss-pale);border:1px solid #C8D8CB;border-radius:100px;padding:4px 12px;}
+  .cta{display:inline-block;background:var(--moss);color:#fff;font-weight:500;font-size:15px;padding:13px 26px;border-radius:6px;text-decoration:none;transition:background .15s;}
+  .cta:hover{background:var(--moss-mid);}
+  .lede{font-size:18px;color:var(--ink-60);margin:8px 0 28px;}
+  h2{font-family:var(--f-serif);font-size:27px;font-weight:400;margin:40px 0 12px;}
+  p{font-size:16px;color:var(--ink-60);margin-bottom:16px;}
+  ul{margin:0 0 16px 22px;}
+  li{font-size:16px;color:var(--ink-60);margin-bottom:9px;}
+  strong{color:var(--ink);font-weight:600;}
+  .faq h3{font-family:var(--f-sans);font-size:16px;font-weight:600;color:var(--ink);margin:22px 0 6px;}
+  .cta-row{margin:40px 0 8px;padding:28px;background:var(--white);border:1px solid var(--stone-3);border-radius:16px;text-align:center;}
+  .cta-row p{margin-bottom:16px;}
+  a.inline{color:var(--moss-lite);}
+  .back{display:inline-block;margin-top:36px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
+  .back:hover{color:var(--ink);}
+  footer{border-top:1px solid var(--stone-3);padding:24px 0;}
+  .footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+  .footer-links a{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--stone-5);text-decoration:none;}
+  .footer-links a:hover{color:var(--ink);}
+
+/* a11y: visible keyboard focus + reduced-motion (site audit) */
+:focus-visible{outline:2px solid #5A8A68;outline-offset:2px;border-radius:3px;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+
+/* language switcher */
+.lang-switch{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;}
+.lang-switch a{color:var(--stone-5);text-decoration:none;}
+.lang-switch a:hover{color:var(--ink);}
+.lang-switch .cur{color:var(--ink);font-weight:600;}
+.lang-switch .lang-sep{color:#C8C5BC;}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.test-note{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;color:var(--ink-60);margin-top:10px;}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Accueil",
+          "item": "https://donebyfive.com/fr/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Modèles",
+          "item": "https://donebyfive.com/fr/templates/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Ensemble de démarrage pour propriétaire",
+          "item": "https://donebyfive.com/fr/templates/landlord-starter-bundle"
+        }
+      ]
+    },
+    {
+      "@type": "Product",
+      "name": "Ensemble de démarrage pour propriétaire",
+      "description": "Huit classeurs pour propriétaire en un seul téléchargement, couvrant les tâches quotidiennes de gestion locative : revenus et dépenses, paiements des locataires, états des lieux, entretien, baux, dépôts, vues multi-logements et préparation fiscale.",
+      "brand": {
+        "@type": "Organization",
+        "name": "DoneByFive"
+      },
+      "category": "Spreadsheet template",
+      "image": "https://donebyfive.com/og-landlord.png",
+      "offers": {
+        "@type": "Offer",
+        "price": "29.00",
+        "priceCurrency": "CAD",
+        "availability": "https://schema.org/PreOrder",
+        "url": "https://buy.stripe.com/test_4gM00l3Fp3U58pX5hhdjO09",
+        "seller": {
+          "@type": "Organization",
+          "name": "DoneByFive"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Fonctionne-t-il à la fois dans Excel et Google Sheets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui. Chaque classeur est un fichier .xlsx standard que vous pouvez ouvrir dans Excel ou téléverser dans Google Sheets — sans macros, sans modules complémentaires, sans abonnement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Est-il vraiment bilingue?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Les libellés et les instructions sont fournis en anglais et en français dans les classeurs, alors vous pouvez utiliser la langue de votre choix."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Est-il conçu pour le Canada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Oui — formatage en dollars canadiens et champs adaptés à l'Alberta là où ça compte, y compris le sommaire de préparation fiscale pour le Canada. Confirmez toujours les règles en vigueur dans votre province."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Comment l'obtenir?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Téléchargement numérique instantané d'un seul fichier ZIP. Achetez une fois, utilisez-le pour toujours — sans frais récurrents."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<header>
+  <div class="wrap"><a href="/fr/" class="brand"><span class="disc">5</span><span class="brand-name">DoneByFive</span></a><div class="lang-switch" aria-label="Language"><a href="/templates/landlord-starter-bundle" hreflang="en-CA" lang="en">EN</a><span class="lang-sep">/</span><span class="cur" aria-current="page">FR</span></div></div>
+</header>
+
+<main class="wrap">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/fr/">Accueil</a> / <a href="/fr/templates/">Modèles</a> / Ensemble de démarrage pour propriétaire</nav>
+
+  <div class="cat">Propriétaire · Ensemble</div>
+  <h1>Ensemble de démarrage pour propriétaire</h1>
+  <div class="meta">
+    <span class="price">29 $ CA</span>
+    <span class="pill">Excel + Google Sheets</span>
+    <span class="pill">Bilingue EN / FR</span><span class="pill">Ensemble ZIP</span>
+  </div>
+  <a href="https://buy.stripe.com/test_4gM00l3Fp3U58pX5hhdjO09" class="cta">Acheter maintenant →</a>
+  <p class="test-note">Paiement test, pas encore en ligne.</p>
+
+  <p class="lede">Huit classeurs pour propriétaire en un seul téléchargement, couvrant les tâches quotidiennes de gestion locative : revenus et dépenses, paiements des locataires, états des lieux, entretien, baux, dépôts, vues multi-logements et préparation fiscale.</p>
+
+  <h2>Pour qui</h2>
+  <p>Propriétaires indépendants et petits propriétaires qui veulent les feuilles de base de la location en un seul achat plutôt que de les acheter une à une. Commencez par les feuilles dont vous avez besoin aujourd&#x27;hui, et adoptez les autres ensuite.</p>
+
+  <h2>Ce qui est inclus</h2>
+  <p>Un seul fichier ZIP contenant 8 classeurs :</p><ul><li><strong>Registre des revenus et des dépenses de biens locatifs</strong></li><li><strong>Suivi des paiements de loyer des locataires</strong></li><li><strong>Liste de vérification d&#x27;état des lieux d&#x27;entrée et de sortie</strong></li><li><strong>Journal des demandes d&#x27;entretien et de réparation</strong></li><li><strong>Suivi des renouvellements et des expirations de bail</strong></li><li><strong>Feuille de gestion des dépôts de garantie</strong></li><li><strong>Tableau de bord multi-logements</strong></li><li><strong>Sommaire de préparation fiscale pour propriétaire (Canada)</strong></li></ul>
+
+  <h2>Comment ça fonctionne</h2>
+  <p>Téléchargez un seul fichier ZIP contenant les huit classeurs. Ouvrez n&#x27;importe quel classeur dans Excel ou Google Sheets, effacez les données d&#x27;exemple et commencez avec vos propres chiffres. Aucune macro, aucun module complémentaire, aucun abonnement, et chaque classeur est bilingue EN/FR, avec formatage en dollars canadiens et champs adaptés à l&#x27;Alberta là où ça compte.</p>
+  <p>Licence : usage personnel pour une seule entreprise ou un seul ménage.</p>
+
+  <h2>Pourquoi</h2>
+  <p>La location repose sur plus d&#x27;une feuille. Paiements, entretien, baux et dépôts doivent tous concorder, et les acheter en ensemble veut dire qu&#x27;ils partagent la même approche simple, conçue par un exploitant, plutôt que huit styles différents.</p>
+
+  <div class="faq">
+    <h2>FAQ</h2>
+    <h3>Fonctionne-t-il à la fois dans Excel et Google Sheets?</h3><p>Oui. Chaque classeur est un fichier .xlsx standard que vous pouvez ouvrir dans Excel ou téléverser dans Google Sheets — sans macros, sans modules complémentaires, sans abonnement.</p><h3>Est-il vraiment bilingue?</h3><p>Les libellés et les instructions sont fournis en anglais et en français dans les classeurs, alors vous pouvez utiliser la langue de votre choix.</p><h3>Est-il conçu pour le Canada?</h3><p>Oui — formatage en dollars canadiens et champs adaptés à l&#x27;Alberta là où ça compte, y compris le sommaire de préparation fiscale pour le Canada. Confirmez toujours les règles en vigueur dans votre province.</p><h3>Comment l&#x27;obtenir?</h3><p>Téléchargement numérique instantané d&#x27;un seul fichier ZIP. Achetez une fois, utilisez-le pour toujours — sans frais récurrents.</p>
+  </div>
+
+  <div class="cta-row">
+    <p><strong>Obtenez les feuilles de base du propriétaire en un seul téléchargement.</strong> Téléchargement instantané, 29 $ CA.</p>
+    <a href="https://buy.stripe.com/test_4gM00l3Fp3U58pX5hhdjO09" class="cta">Acheter maintenant →</a>
+    <p class="test-note">Paiement test, pas encore en ligne.</p>
+  </div>
+
+  <h2>Modèles connexes</h2>
+  <ul>
+    <li><a class="inline" href="/fr/templates/landlord-rent-tracker">Registre des loyers et suivi des paiements pour propriétaire</a></li><li><a class="inline" href="/fr/templates/multi-unit-dashboard">Tableau de bord multi-logements</a></li>
+  </ul>
+
+  <a href="/fr/#templates" class="back">← Tous les modèles</a>
+</main>
+
+<footer>
+  <div class="wrap footer-links">
+    <a href="/fr/templates/">Modèles</a>
+    <a href="/fr/doula/">Doula et naissance</a>
+    <a href="/fr/#about">À propos</a>
+    <a href="/fr/#capture">Infolettre</a>
+    <a href="https://www.etsy.com/shop/DoneByFive" target="_blank" rel="noopener noreferrer">Boutique Etsy</a>
+    <a href="/fr/privacy">Confidentialité</a>
+    <a href="/fr/terms">Conditions</a>
+  </div>
+</footer>
+</body>
+</html>
