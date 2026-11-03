@@ -114,6 +114,27 @@ export async function ensureDeliveryTables(env) {
   ).run();
 }
 
+async function sendDownloadEmail(env, buyerEmail, fileName, token) {
+  if (!env.EMAIL_API_KEY || !buyerEmail) return false;
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.EMAIL_API_KEY}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "DoneByFive <orders@donebyfive.com>",
+        to: [buyerEmail],
+        subject: `Your DoneByFive download is ready: ${fileName}`,
+        text: `Thanks for your DoneByFive order.\n\nYour file is ready to download: ${fileName}\n\nDownload it here: https://donebyfive.com/download/${token}\n\nYour download link works for 7 days, up to 3 downloads. Save the file to your own device once it downloads.\n\nBilingual EN/FR digital downloads, built in Alberta. Instant download, buy once, no subscription.`,
+        html: `<p>Thanks for your DoneByFive order.</p><p>Your file is ready to download: <strong>${fileName}</strong></p><p><a href="https://donebyfive.com/download/${token}">Download your file</a></p><p>Your download link works for 7 days, up to 3 downloads. Save the file to your own device once it downloads.</p><p>Bilingual EN/FR digital downloads, built in Alberta. Instant download, buy once, no subscription.</p>`,
+      }),
+    });
+    return res.ok;
+  } catch { return false; }
+}
+
 // POST /api/stripe/webhook
 // Verifies the Stripe signature with Web Crypto, no Stripe library needed
 // in the Worker. Only checkout.session.completed and payment_intent.succeeded
@@ -182,12 +203,16 @@ export async function handleStripeWebhook(request, env) {
 
   await ensureDeliveryTables(env);
   const orderId = obj.id || event.id;
+  const buyerEmail = obj.customer_details?.email || obj.receipt_email || null;
+  const existingOrder = await env.DB.prepare(
+    "SELECT id FROM delivery_orders WHERE id = ?"
+  ).bind(orderId).first();
   await env.DB.prepare(
     "INSERT OR IGNORE INTO delivery_orders " +
       "(id, payment_id, price_id, file_name, buyer_email, amount, currency, status, created_at) " +
       "VALUES (?, ?, ?, ?, ?, ?, ?, 'paid', ?)"
   ).bind(orderId, obj.payment_intent || orderId, priceId, fileName,
-    obj.customer_details?.email || obj.receipt_email || null,
+    buyerEmail,
     obj.amount_total ?? obj.amount ?? null, obj.currency || "cad",
     Math.floor(Date.now() / 1000)).run();
   if (env.DOWNLOAD_TOKEN_SECRET) {
@@ -196,10 +221,13 @@ export async function handleStripeWebhook(request, env) {
     await env.DB.prepare(
       "INSERT OR IGNORE INTO delivery_tokens (token, order_id, downloads, expires_at, created_at) VALUES (?, ?, 0, ?, ?)"
     ).bind(token, orderId, expiry, Math.floor(Date.now() / 1000)).run();
+    // Email delivery, added Nov 3, 2026, test mode only: send the token
+    // link once, only for a newly created order, only when a Resend key
+    // is configured. No file attachment, no public file folder.
+    // Without EMAIL_API_KEY this is a no-op and the thank-you page
+    // remains the buyer path.
+    if (!existingOrder) await sendDownloadEmail(env, buyerEmail, fileName, token);
   }
-  // Email delivery is a separate step on merge: send the token link with
-  // the configured email provider, using env.EMAIL_API_KEY. Do not send
-  // the file as an attachment, and do not put the file in a public folder.
   return json({ ok: true, order_id: orderId, file_name: fileName });
 }
 
@@ -309,6 +337,9 @@ export async function handleDeliveryLookup(request, env) {
       "INSERT OR IGNORE INTO delivery_tokens (token, order_id, downloads, expires_at, created_at) VALUES (?, ?, 0, ?, ?)"
     ).bind(token, sessionId, expiry, Math.floor(Date.now() / 1000)).run();
     tokenRow = await env.DB.prepare("SELECT * FROM delivery_tokens WHERE order_id = ? ORDER BY created_at DESC LIMIT 1").bind(sessionId).first();
+    // Lookup-created order: email once here too, so a buyer still gets
+    // mail even if the webhook missed. No-op without EMAIL_API_KEY.
+    if (session) await sendDownloadEmail(env, order.buyer_email, order.file_name, token);
   }
   return json({ ok: true, file_name: order.file_name, download_url: `/download/${tokenRow.token}` });
 }
