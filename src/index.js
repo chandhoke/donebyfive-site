@@ -10,6 +10,8 @@
 //   SHA-256 hash (the password itself is never in this repository).
 //   This keeps casual visitors out. It is a shared-password gate for a
 //   planner that holds no private credentials, not enterprise auth.
+import { handleStripeWebhook, handleDownload } from "./delivery.js";
+
 const PLANNER_USER = "emily";
 const PLANNER_PASSWORD_HASH =
   "e714ee622b5881114f8f43d69246e20a81c5a514ba9c00f130c3e9cac314132c";
@@ -29,6 +31,18 @@ export default {
     if (url.hostname === "www.donebyfive.com") {
       url.hostname = "donebyfive.com";
       return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/api/stripe/webhook") {
+      if (request.method !== "POST") {
+        return json({ ok: false, error: "Method not allowed." }, 405);
+      }
+      return handleStripeWebhook(request, env);
+    }
+
+    if (url.pathname.startsWith("/download/")) {
+      const token = url.pathname.slice("/download/".length);
+      return handleDownload(request, env, token);
     }
 
     if (url.pathname === "/api/subscribe") {
