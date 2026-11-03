@@ -1,0 +1,193 @@
+<!--
+  DoneByFive thank-you page, test mode only, Nov 3, 2026.
+  Reads session_id from the URL, calls POST /api/delivery/lookup,
+  shows the file name and download link on success. No secrets,
+  no email, no payment taken here.
+  Stripe Payment Link after_completion redirect still to be set
+  in test mode to: /thank-you?session_id={CHECKOUT_SESSION_ID}
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thanks, your download is ready — DoneByFive</title>
+<style>
+  :root {
+    --ink: #111110;
+    --stone: #F7F6F2;
+    --white: #FFFFFF;
+    --moss: #2D4A35;
+    --moss-mid: #3D6347;
+    --moss-pale: #E8F0EA;
+    --gold: #B8932A;
+    --red-soft: #C0392B;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--stone);
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55;
+  }
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 48px 20px 64px;
+  }
+  .eyebrow {
+    margin: 0 0 8px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--moss-mid);
+  }
+  h1 {
+    margin: 0 0 12px;
+    font-family: Georgia, "Instrument Serif", serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+  h1 em { color: var(--moss); font-style: italic; }
+  p { margin: 0 0 16px; }
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(17, 17, 16, 0.06), 0 4px 16px rgba(17, 17, 16, 0.06);
+  }
+  .file-name {
+    font-family: "Courier New", monospace;
+    font-size: 15px;
+    word-break: break-all;
+  }
+  .button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    background: var(--moss);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .button:hover { background: var(--moss-mid); }
+  .button-secondary {
+    background: transparent;
+    color: var(--moss);
+    border: 1px solid var(--moss);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+  }
+  .note { color: #555550; font-size: 14px; }
+  .error { color: var(--red-soft); }
+  .hidden { display: none; }
+  footer { margin-top: 32px; font-size: 14px; color: #555550; }
+  footer a { color: var(--moss); }
+</style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">DoneByFive · Alberta, Canada · EN/FR</p>
+  <h1>Thanks. Your download is <em>ready.</em></h1>
+  <p>Buy once, no subscription. Your file is below, once your payment is confirmed.</p>
+
+  <section class="card" aria-live="polite">
+    <div id="loading">
+      <p>Checking your payment…</p>
+      <p class="note">This usually takes a few seconds. Please keep this page open.</p>
+    </div>
+
+    <div id="success" class="hidden">
+      <p>Your file is ready to download:</p>
+      <p class="file-name" id="file-name"></p>
+      <p><a class="button" id="download-link" href="#">Download your file</a></p>
+      <p class="note">Your download link works for 7 days, up to 3 downloads. Save the file to your own device once it downloads.</p>
+    </div>
+
+    <div id="error" class="hidden">
+      <p class="error" id="error-message"></p>
+      <p><button class="button button-secondary" id="retry-button" type="button">Try again</button></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Bilingual EN/FR digital downloads, built in Alberta. Instant download, buy once, no subscription.</p>
+    <p><a href="/">Back to DoneByFive</a></p>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var loading = document.getElementById("loading");
+    var success = document.getElementById("success");
+    var errorBox = document.getElementById("error");
+    var errorMessage = document.getElementById("error-message");
+    var fileNameEl = document.getElementById("file-name");
+    var downloadLink = document.getElementById("download-link");
+    var retryButton = document.getElementById("retry-button");
+
+    function showError(message) {
+      loading.classList.add("hidden");
+      success.classList.add("hidden");
+      errorMessage.textContent = message;
+      errorBox.classList.remove("hidden");
+    }
+
+    function showSuccess(data) {
+      loading.classList.add("hidden");
+      errorBox.classList.add("hidden");
+      fileNameEl.textContent = data.file_name || "Your file";
+      downloadLink.setAttribute("href", data.download_url);
+      success.classList.remove("hidden");
+    }
+
+    function showLoading() {
+      success.classList.add("hidden");
+      errorBox.classList.add("hidden");
+      loading.classList.remove("hidden");
+    }
+
+    async function lookup() {
+      showLoading();
+      var params = new URLSearchParams(window.location.search);
+      var sessionId = (params.get("session_id") || "").trim();
+
+      if (!sessionId || !sessionId.startsWith("cs_")) {
+        showError("We could not find a payment for this page. The download link may be incomplete. Please return to checkout and try again, or use the contact details on donebyfive.com if you have already paid.");
+        return;
+      }
+
+      try {
+        var response = await fetch("/api/delivery/lookup", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ session_id: sessionId })
+        });
+        var data = await response.json().catch(function () { return {}; });
+
+        if (response.ok && data.ok && data.download_url) {
+          showSuccess(data);
+          return;
+        }
+        if (response.status === 402) {
+          showError("Your payment is not complete yet. Please wait a moment and try again. If you have already paid, your link will appear here once the payment is confirmed.");
+        } else if (response.status === 404) {
+          showError("This payment session could not be found. The link may be wrong or expired. Please return to checkout and try again, or use the contact details on donebyfive.com if you have already paid.");
+        } else {
+          showError((data && data.error) || "Something went wrong checking your payment. Please try again.");
+        }
+      } catch (err) {
+        showError("We could not reach the payment check just now. Please try again.");
+      }
+    }
+
+    retryButton.addEventListener("click", lookup);
+    lookup();
+  })();
+</script>
+</body>
+</html>
