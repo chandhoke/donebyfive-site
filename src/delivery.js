@@ -201,12 +201,17 @@ export async function handleDownload(request, env, token) {
 }
 
 // POST /api/delivery/lookup { session_id }
-// Buyer-facing step, no email provider needed. Verifies the Checkout
-// Session with Stripe using the test secret key, checks payment_status
-// is paid, then returns the existing download URL for that order, or
-// creates the order and token if the webhook has not run yet yet.
+// Buyer-facing step, no email provider needed. If the webhook already
+// created a paid order for this session, return its download URL from
+// D1 first, without depending on a Stripe session fetch. Only if no
+// paid order exists yet, verify the Checkout Session with Stripe using
+// the test secret key, check payment_status is paid, then create the
+// order and token if the webhook has not run yet.
 // Only the buyer who holds the paid session id can get its link, and
 // only for a paid session. Never returns a link for an unpaid session.
+// Fix Nov 3, 2026: the previous order checked Stripe first, so a
+// webhook-created paid order still returned 404 "Session not found"
+// when the Worker secret key could not fetch that session from Stripe.
 export async function handleDeliveryLookup(request, env) {
   if (!env.STRIPE_SECRET_KEY || !env.DOWNLOAD_TOKEN_SECRET || !env.DB) {
     return json({ ok: false, error: "Delivery is not configured yet." }, 503);
@@ -215,16 +220,19 @@ export async function handleDeliveryLookup(request, env) {
   try { data = await request.json(); } catch { return json({ ok: false, error: "Bad request." }, 400); }
   const sessionId = String(data.session_id || "").trim();
   if (!sessionId.startsWith("cs_")) return json({ ok: false, error: "Invalid session." }, 400);
-  const res = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}`, {
-    headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
-  });
-  if (!res.ok) return json({ ok: false, error: "Session not found." }, 404);
-  const session = await res.json();
-  if (session.payment_status !== "paid") {
-    return json({ ok: false, error: "Payment is not complete yet." }, 402);
-  }
   await ensureDeliveryTables(env);
   let order = await env.DB.prepare("SELECT * FROM delivery_orders WHERE id = ?").bind(sessionId).first();
+  let session = null;
+  if (!order) {
+    const res = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}`, {
+      headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+    });
+    if (!res.ok) return json({ ok: false, error: "Session not found." }, 404);
+    session = await res.json();
+    if (session.payment_status !== "paid") {
+      return json({ ok: false, error: "Payment is not complete yet." }, 402);
+    }
+  }
   if (!order) {
     // Webhook has not run yet: create the order from the verified session.
     const itemsRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}/line_items?limit=1`, {
