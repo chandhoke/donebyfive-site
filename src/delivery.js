@@ -117,6 +117,38 @@ export async function ensureDeliveryTables(env) {
 async function sendDownloadEmail(env, buyerEmail, fileName, token) {
   if (!env.EMAIL_API_KEY || !buyerEmail) return false;
   try {
+    const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    const url = `https://donebyfive.com/download/${token}`;
+    const text =
+      `DoneByFive\nThe hard part, done. By five.\n\n` +
+      `Thanks for your order. Your file is ready.\n\n` +
+      `${fileName}\nDownload your file: ${url}\n\n` +
+      `How to use it: save the file to your own device, then open it in Excel or Google Sheets. No macros, no add-ins, no subscription.\n\n` +
+      `Your download link works for 7 days, up to 3 downloads. If the link expires, reply to this email and we will help.\n\n` +
+      `Bilingual EN/FR digital download, built in Alberta. Buy once, no subscription.\n` +
+      `donebyfive.com`;
+    const html =
+      `<div style="font-family:Arial,Helvetica,sans-serif;color:#1b1b1b;background:#f4f4f2;padding:24px 12px;">` +
+      `<div style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e2e2de;">` +
+      `<div style="padding:28px 32px 20px;border-bottom:4px solid #1b1b1b;">` +
+      `<div style="font-size:26px;font-weight:bold;letter-spacing:-0.5px;">DoneByFive</div>` +
+      `<div style="font-size:14px;color:#666666;margin-top:4px;">The hard part, done. By five.</div>` +
+      `</div>` +
+      `<div style="padding:28px 32px;">` +
+      `<h1 style="font-size:22px;margin:0 0 8px;">Thanks for your order.</h1>` +
+      `<p style="font-size:16px;line-height:24px;margin:0 0 20px;">Your file is ready to download.</p>` +
+      `<div style="border:1px solid #e2e2de;padding:18px 20px;margin-bottom:24px;">` +
+      `<div style="font-size:12px;color:#666666;text-transform:uppercase;letter-spacing:1px;">Your file</div>` +
+      `<div style="font-size:17px;font-weight:bold;margin-top:6px;">${esc(fileName)}</div>` +
+      `<div style="font-size:14px;color:#666666;margin-top:4px;">Excel / Google Sheets &middot; Bilingual EN/FR</div>` +
+      `</div>` +
+      `<a href="${url}" style="display:inline-block;background:#1b1b1b;color:#ffffff;font-size:16px;font-weight:bold;text-decoration:none;padding:14px 28px;">Download your file</a>` +
+      `<p style="font-size:14px;line-height:22px;color:#444444;margin:24px 0 0;">Save the file to your own device once it downloads, then open it in Excel or Google Sheets. No macros, no add-ins, no subscription.</p>` +
+      `<p style="font-size:14px;line-height:22px;color:#444444;">Your download link works for 7 days, up to 3 downloads. If the link expires, reply to this email and we will help.</p>` +
+      `<p style="font-size:14px;line-height:22px;color:#666666;border-top:1px solid #e2e2de;padding-top:16px;margin-top:24px;">Votre fichier est pr&ecirc;t &agrave; t&eacute;l&eacute;charger.<br>Bilingual EN/FR digital download, built in Alberta. Buy once, no subscription.</p>` +
+      `</div>` +
+      `<div style="padding:16px 32px;background:#f4f4f2;font-size:13px;color:#666666;">donebyfive.com &middot; Alberta, Canada</div>` +
+      `</div></div>`;
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -126,9 +158,9 @@ async function sendDownloadEmail(env, buyerEmail, fileName, token) {
       body: JSON.stringify({
         from: "DoneByFive <orders@donebyfive.com>",
         to: [buyerEmail],
-        subject: `Your DoneByFive download is ready: ${fileName}`,
-        text: `Thanks for your DoneByFive order.\n\nYour file is ready to download: ${fileName}\n\nDownload it here: https://donebyfive.com/download/${token}\n\nYour download link works for 7 days, up to 3 downloads. Save the file to your own device once it downloads.\n\nBilingual EN/FR digital downloads, built in Alberta. Instant download, buy once, no subscription.`,
-        html: `<p>Thanks for your DoneByFive order.</p><p>Your file is ready to download: <strong>${fileName}</strong></p><p><a href="https://donebyfive.com/download/${token}">Download your file</a></p><p>Your download link works for 7 days, up to 3 downloads. Save the file to your own device once it downloads.</p><p>Bilingual EN/FR digital downloads, built in Alberta. Instant download, buy once, no subscription.</p>`,
+        subject: "Your DoneByFive download is ready",
+        text,
+        html,
       }),
     });
     return res.ok;
