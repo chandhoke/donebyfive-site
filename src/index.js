@@ -10,7 +10,7 @@
 //   SHA-256 hash (the password itself is never in this repository).
 //   This keeps casual visitors out. It is a shared-password gate for a
 //   planner that holds no private credentials, not enterprise auth.
-import { handleStripeWebhook, handleDownload } from "./delivery.js";
+import { handleStripeWebhook, handleDownload, handleDeliveryLookup } from "./delivery.js";
 
 const PLANNER_USER = "emily";
 const PLANNER_PASSWORD_HASH =
@@ -43,6 +43,13 @@ export default {
     if (url.pathname.startsWith("/download/")) {
       const token = url.pathname.slice("/download/".length);
       return handleDownload(request, env, token);
+    }
+
+    if (url.pathname === "/api/delivery/lookup") {
+      if (request.method !== "POST") {
+        return json({ ok: false, error: "Method not allowed." }, 405);
+      }
+      return handleDeliveryLookup(request, env);
     }
 
     if (url.pathname === "/api/subscribe") {

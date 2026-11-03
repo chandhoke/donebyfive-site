@@ -199,3 +199,58 @@ export async function handleDownload(request, env, token) {
     },
   });
 }
+
+// POST /api/delivery/lookup { session_id }
+// Buyer-facing step, no email provider needed. Verifies the Checkout
+// Session with Stripe using the test secret key, checks payment_status
+// is paid, then returns the existing download URL for that order, or
+// creates the order and token if the webhook has not run yet yet.
+// Only the buyer who holds the paid session id can get its link, and
+// only for a paid session. Never returns a link for an unpaid session.
+export async function handleDeliveryLookup(request, env) {
+  if (!env.STRIPE_SECRET_KEY || !env.DOWNLOAD_TOKEN_SECRET || !env.DB) {
+    return json({ ok: false, error: "Delivery is not configured yet." }, 503);
+  }
+  let data;
+  try { data = await request.json(); } catch { return json({ ok: false, error: "Bad request." }, 400); }
+  const sessionId = String(data.session_id || "").trim();
+  if (!sessionId.startsWith("cs_")) return json({ ok: false, error: "Invalid session." }, 400);
+  const res = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}`, {
+    headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+  });
+  if (!res.ok) return json({ ok: false, error: "Session not found." }, 404);
+  const session = await res.json();
+  if (session.payment_status !== "paid") {
+    return json({ ok: false, error: "Payment is not complete yet." }, 402);
+  }
+  await ensureDeliveryTables(env);
+  let order = await env.DB.prepare("SELECT * FROM delivery_orders WHERE id = ?").bind(sessionId).first();
+  if (!order) {
+    // Webhook has not run yet: create the order from the verified session.
+    const itemsRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${sessionId}/line_items?limit=1`, {
+      headers: { Authorization: `Bearer ${env.STRIPE_SECRET_KEY}` },
+    });
+    const items = itemsRes.ok ? await itemsRes.json() : null;
+    const priceId = items?.data?.[0]?.price?.id || "";
+    let fileName = priceId ? PRODUCT_FILES[priceId] : null;
+    if (!fileName && session.payment_link) fileName = PAYMENT_LINK_FILES[session.payment_link];
+    if (!fileName) return json({ ok: false, error: "Product not recognised." }, 400);
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO delivery_orders (id, payment_id, price_id, file_name, buyer_email, amount, currency, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'paid', ?)"
+    ).bind(sessionId, session.payment_intent || sessionId, priceId, fileName,
+      session.customer_details?.email || null, session.amount_total ?? null, session.currency || "cad",
+      Math.floor(Date.now() / 1000)).run();
+    order = await env.DB.prepare("SELECT * FROM delivery_orders WHERE id = ?").bind(sessionId).first();
+  }
+  if (!order || order.status !== "paid") return json({ ok: false, error: "Order not available." }, 403);
+  let tokenRow = await env.DB.prepare("SELECT * FROM delivery_tokens WHERE order_id = ? ORDER BY created_at DESC LIMIT 1").bind(sessionId).first();
+  if (!tokenRow) {
+    const expiry = Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS;
+    const token = await makeDownloadToken(env.DOWNLOAD_TOKEN_SECRET, sessionId, expiry);
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO delivery_tokens (token, order_id, downloads, expires_at, created_at) VALUES (?, ?, 0, ?, ?)"
+    ).bind(token, sessionId, expiry, Math.floor(Date.now() / 1000)).run();
+    tokenRow = await env.DB.prepare("SELECT * FROM delivery_tokens WHERE order_id = ? ORDER BY created_at DESC LIMIT 1").bind(sessionId).first();
+  }
+  return json({ ok: true, file_name: order.file_name, download_url: `/download/${tokenRow.token}` });
+}
