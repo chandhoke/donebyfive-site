@@ -13,7 +13,7 @@
 //   R2 bucket "FILES"        - Private bucket holding the 10 clean delivery files
 //   D1 database "DB"         - Already used by the site for signups/planner
 //
-// Product map: Stripe sandbox price ID -> clean delivery file in R2.
+// Product map: Stripe price ID -> clean delivery file in R2. Includes sandbox prices and classic test prices created Nov 3, 2026.
 // File names must match the verified clean set, with Rental / Repair /
 // Landlord bundles verified against the PR #101 rebuilt set before live.
 export const PRODUCT_FILES = {
@@ -27,6 +27,15 @@ export const PRODUCT_FILES = {
   "price_1UXiI6Q1kgMeTTuRh24U7LMq": "Retail Starter Bundle.zip",
   "price_1UXiI7Q1kgMeTTuRbMrQJDYt": "Repair Shop Starter Bundle.zip",
   "price_1UXiI8Q1kgMeTTuRtKKfcAw9": "Landlord Starter Bundle.zip",
+  "price_1UXmUoQ8u6FiPZ7W5D0zdDoT": "Reorder Point and Par Level Calculator.xlsx",
+  "price_1UXmWPQ8u6FiPZ7WlwghQKt3": "Device Repair Job Ticket Tracker.xlsx",
+  "price_1UXmXsQ8u6FiPZ7WNLvVCxTN": "Parts Inventory Reorder Tracker.xlsx",
+  "price_1UXmZWQ8u6FiPZ7WjBqi5L9Y": "Repair Shop Cash Book Daily Sales Log.xlsx",
+  "price_1UXmawQ8u6FiPZ7WVDTi42Gi": "Rental Property Income and Expense Ledger.xlsx",
+  "price_1UXmcUQ8u6FiPZ7W31BoWqBD": "Multi-Unit Property Dashboard.xlsx",
+  "price_1UXmdwQ8u6FiPZ7WfKaOiGVL": "Retail Starter Bundle.zip",
+  "price_1UXmfGQ8u6FiPZ7W0EN86Sgc": "Repair Shop Starter Bundle.zip",
+  "price_1UXmgwQ8u6FiPZ7Wyj8ZUQrO": "Landlord Starter Bundle.zip",
 };
 
 export const PAYMENT_LINK_FILES = {
@@ -41,6 +50,15 @@ export const PAYMENT_LINK_FILES = {
   "plink_1UXiJRQ1kgMeTTuRQbjQptYm": "Retail Starter Bundle.zip",
   "plink_1UXiJSQ1kgMeTTuRWtjrOd2i": "Repair Shop Starter Bundle.zip",
   "plink_1UXiJTQ1kgMeTTuR0kZmQZgM": "Landlord Starter Bundle.zip",
+  "plink_1UXmVaQ8u6FiPZ7WBLO10ZXo": "Reorder Point and Par Level Calculator.xlsx",
+  "plink_1UXmWvQ8u6FiPZ7WLAVA0fE8": "Device Repair Job Ticket Tracker.xlsx",
+  "plink_1UXmYdQ8u6FiPZ7WmNx28lmG": "Parts Inventory Reorder Tracker.xlsx",
+  "plink_1UXma7Q8u6FiPZ7WTHf8V7En": "Repair Shop Cash Book Daily Sales Log.xlsx",
+  "plink_1UXmbYQ8u6FiPZ7Wp2gJVOLC": "Rental Property Income and Expense Ledger.xlsx",
+  "plink_1UXmd4Q8u6FiPZ7WN5w4DKeq": "Multi-Unit Property Dashboard.xlsx",
+  "plink_1UXmeUQ8u6FiPZ7WstYki9Lj": "Retail Starter Bundle.zip",
+  "plink_1UXmg0Q8u6FiPZ7Wx1DWmAYK": "Repair Shop Starter Bundle.zip",
+  "plink_1UXmhUQ8u6FiPZ7W6xA1AkWS": "Landlord Starter Bundle.zip",
 };
 
 const TOKEN_TTL_SECONDS = 7 * 24 * 60 * 60; // 7 days
