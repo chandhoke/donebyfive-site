@@ -23,3 +23,9 @@ not_found_handling = "404-page"
 binding = "DB"
 database_name = "donebyfive-subscribers"
 database_id = "79eaa17d-0818-418a-83c0-a2d4adf048ad"
+
+# Private delivery files, test mode only. Bucket created Nov 3, 2026.
+# No public access, no custom domain, no public development URL.
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "donebyfive-delivery"
