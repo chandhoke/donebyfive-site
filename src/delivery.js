@@ -134,6 +134,25 @@ export async function handleStripeWebhook(request, env) {
 
   let event;
   try { event = JSON.parse(rawBody); } catch { return json({ ok: false, error: "Bad JSON." }, 400); }
+  // Refund revocation, added Nov 3, 2026, test mode only: a full refund
+  // must revoke the download. The charge carries payment_intent, which
+  // is the payment_id stored on the delivery order (the order id itself
+  // is the Checkout Session id). A partial refund leaves the order paid,
+  // because the buyer still paid for part of a one-time file.
+  if (event.type === "charge.refunded") {
+    const charge = event.data?.object || {};
+    const paymentIntent = typeof charge.payment_intent === "string"
+      ? charge.payment_intent
+      : charge.payment_intent?.id || "";
+    await ensureDeliveryTables(env);
+    if (!paymentIntent) return json({ ok: true, ignored: true, reason: "No payment_intent." });
+    const full = (charge.amount ?? 0) > 0 && (charge.amount_refunded ?? 0) >= charge.amount;
+    if (!full) return json({ ok: true, ignored: true, reason: "Partial refund." });
+    const updated = await env.DB.prepare(
+      "UPDATE delivery_orders SET status = 'refunded' WHERE payment_id = ? OR id = ?"
+    ).bind(paymentIntent, paymentIntent).run();
+    return json({ ok: true, refunded: true, changes: updated?.meta?.changes ?? null });
+  }
   if (event.type !== "checkout.session.completed" && event.type !== "payment_intent.succeeded") {
     return json({ ok: true, ignored: true });
   }
@@ -203,7 +222,15 @@ export async function handleDownload(request, env, token) {
   const order = await env.DB.prepare(
     "SELECT * FROM delivery_orders WHERE id = ? AND status = 'paid'"
   ).bind(row.order_id).first();
-  if (!order) return json({ ok: false, error: "This order is not available for download." }, 403);
+  if (!order) {
+    const anyOrder = await env.DB.prepare(
+      "SELECT * FROM delivery_orders WHERE id = ?"
+    ).bind(row.order_id).first();
+    if (anyOrder?.status === "refunded") {
+      return json({ ok: false, error: "This order was refunded, so the download is no longer available." }, 403);
+    }
+    return json({ ok: false, error: "This order is not available for download." }, 403);
+  }
   const file = await env.FILES.get(order.file_name);
   if (!file) return json({ ok: false, error: "File not found. Contact support." }, 404);
   await env.DB.prepare(
@@ -268,7 +295,12 @@ export async function handleDeliveryLookup(request, env) {
       Math.floor(Date.now() / 1000)).run();
     order = await env.DB.prepare("SELECT * FROM delivery_orders WHERE id = ?").bind(sessionId).first();
   }
-  if (!order || order.status !== "paid") return json({ ok: false, error: "Order not available." }, 403);
+  if (!order || order.status !== "paid") {
+    if (order?.status === "refunded") {
+      return json({ ok: false, error: "This order was refunded, so the download is no longer available." }, 403);
+    }
+    return json({ ok: false, error: "Order not available." }, 403);
+  }
   let tokenRow = await env.DB.prepare("SELECT * FROM delivery_tokens WHERE order_id = ? ORDER BY created_at DESC LIMIT 1").bind(sessionId).first();
   if (!tokenRow) {
     const expiry = Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS;
